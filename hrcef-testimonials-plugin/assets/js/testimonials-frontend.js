@@ -41,28 +41,55 @@
         
         const imageUrl = testimonial.image || defaultImage;
         
-        card.innerHTML = `
-            <div class="hrcef-testimonial-content-top">
-                <blockquote class="hrcef-testimonial-quote">${escapeHtml(testimonial.quote)}</blockquote>
-                <div class="hrcef-quote-icon">"</div>
-                <div class="hrcef-testimonial-avatar" style="background-image: url('${escapeHtml(imageUrl)}')"></div>
-            </div>
-            <div class="hrcef-testimonial-footer">
-                <div class="hrcef-testimonial-attribution">
-                    <div class="hrcef-author-name">${escapeHtml(testimonial.author)}</div>
-                    <div class="hrcef-author-institution">${escapeHtml(testimonial.institution)}</div>
-                </div>
-            </div>
-        `;
+        // Create elements and set text content directly to avoid HTML encoding issues
+        const contentTop = document.createElement('div');
+        contentTop.className = 'hrcef-testimonial-content-top';
+        
+        const quote = document.createElement('blockquote');
+        quote.className = 'hrcef-testimonial-quote';
+        quote.textContent = decodeHtmlEntities(testimonial.quote);
+        
+        const quoteIcon = document.createElement('div');
+        quoteIcon.className = 'hrcef-quote-icon';
+        quoteIcon.textContent = '"';
+        
+        const avatar = document.createElement('div');
+        avatar.className = 'hrcef-testimonial-avatar';
+        avatar.style.backgroundImage = `url('${imageUrl}')`;
+        
+        contentTop.appendChild(quote);
+        contentTop.appendChild(quoteIcon);
+        contentTop.appendChild(avatar);
+        
+        const footer = document.createElement('div');
+        footer.className = 'hrcef-testimonial-footer';
+        
+        const attribution = document.createElement('div');
+        attribution.className = 'hrcef-testimonial-attribution';
+        
+        const authorName = document.createElement('div');
+        authorName.className = 'hrcef-author-name';
+        authorName.textContent = testimonial.author;
+        
+        const authorInstitution = document.createElement('div');
+        authorInstitution.className = 'hrcef-author-institution';
+        authorInstitution.textContent = testimonial.institution;
+        
+        attribution.appendChild(authorName);
+        attribution.appendChild(authorInstitution);
+        footer.appendChild(attribution);
+        
+        card.appendChild(contentTop);
+        card.appendChild(footer);
         
         return card;
     }
     
-    // Escape HTML to prevent XSS
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
+    // Decode HTML entities
+    function decodeHtmlEntities(text) {
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = text;
+        return textarea.value;
     }
     
     // Initialize on page load
@@ -88,17 +115,6 @@
             });
         });
         
-        // Add click handler to refresh buttons
-        const refreshButtons = document.querySelectorAll('[data-testimonials-refresh]');
-        refreshButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                const section = button.closest('.hrcef-testimonials-section');
-                const grid = section.querySelector('[data-testimonials-grid]');
-                if (grid) {
-                    loadRandomTestimonials(grid);
-                }
-            });
-        });
         
         // Handle window resize (debounced)
         let resizeTimer;

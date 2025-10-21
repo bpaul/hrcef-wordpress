@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Testimonials
  * Plugin URI: https://hrcef.org
  * Description: A beautiful testimonials plugin for Hood River County Education Foundation with Gutenberg block support
- * Version: 1.0.0
+ * Version: 1.0.4
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_TESTIMONIALS_VERSION', '1.0.0');
+define('HRCEF_TESTIMONIALS_VERSION', '1.0.4');
 define('HRCEF_TESTIMONIALS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_TESTIMONIALS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -114,7 +114,21 @@ class HRCEF_Testimonials {
         register_block_type('hrcef/testimonials', array(
             'editor_script'   => 'hrcef-testimonials-block',
             'style'          => 'hrcef-testimonials-block-style',
-            'render_callback' => array($this, 'render_testimonials_block')
+            'render_callback' => array($this, 'render_testimonials_block'),
+            'attributes'      => array(
+                'count' => array(
+                    'type'    => 'number',
+                    'default' => 3
+                ),
+                'align' => array(
+                    'type'    => 'string',
+                    'default' => 'full'
+                )
+            ),
+            'supports'        => array(
+                'align' => array('wide', 'full'),
+                'alignWide' => true
+            )
         ));
     }
     
@@ -123,6 +137,7 @@ class HRCEF_Testimonials {
      */
     public function render_testimonials_block($attributes) {
         $count = isset($attributes['count']) ? intval($attributes['count']) : 3;
+        $align = isset($attributes['align']) ? $attributes['align'] : 'full';
         
         // Get random testimonials
         $args = array(
@@ -135,7 +150,13 @@ class HRCEF_Testimonials {
         $testimonials = get_posts($args);
         
         if (empty($testimonials)) {
-            return '<p>' . __('No testimonials found.', 'hrcef-testimonials') . '</p>';
+            $message = '<div style="padding: 40px; text-align: center; background: #f5f5f5; border-radius: 8px; border: 2px dashed #ccc;">';
+            $message .= '<p style="margin: 0 0 10px; font-size: 16px; color: #666;">' . __('No testimonials found.', 'hrcef-testimonials') . '</p>';
+            if (current_user_can('edit_posts')) {
+                $message .= '<p style="margin: 0;"><a href="' . admin_url('post-new.php?post_type=hrcef_testimonial') . '" class="button button-primary">' . __('Add Your First Testimonial', 'hrcef-testimonials') . '</a></p>';
+            }
+            $message .= '</div>';
+            return $message;
         }
         
         ob_start();
@@ -244,9 +265,13 @@ class HRCEF_Testimonials {
             $image_id = get_post_thumbnail_id($testimonial->ID);
             $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium') : '';
             
+            // Strip Gutenberg block markup and get clean text
+            $quote = apply_filters('the_content', $testimonial->post_content);
+            $quote = wp_strip_all_tags($quote);
+            
             $data[] = array(
                 'id'          => $testimonial->ID,
-                'quote'       => $testimonial->post_content,
+                'quote'       => $quote,
                 'author'      => $author,
                 'institution' => $institution,
                 'image'       => $image_url

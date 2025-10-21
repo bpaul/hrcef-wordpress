@@ -1,9 +1,9 @@
-(function(blocks, element, blockEditor, components) {
+(function(blocks, element, blockEditor, components, serverSideRender) {
     var el = element.createElement;
     var InspectorControls = blockEditor.InspectorControls;
     var PanelBody = components.PanelBody;
     var RangeControl = components.RangeControl;
-    var ServerSideRender = wp.serverSideRender;
+    var ServerSideRender = serverSideRender;
 
     blocks.registerBlockType('hrcef/testimonials', {
         title: 'HRCEF Testimonials',
@@ -13,14 +13,25 @@
             count: {
                 type: 'number',
                 default: 3
+            },
+            align: {
+                type: 'string',
+                default: 'full'
             }
+        },
+        supports: {
+            align: ['wide', 'full'],
+            alignWide: true
+        },
+        getEditWrapperProps: function(attributes) {
+            return { 'data-align': attributes.align };
         },
         
         edit: function(props) {
             var attributes = props.attributes;
             var setAttributes = props.setAttributes;
             
-            return [
+            return el('div', {},
                 el(InspectorControls, {},
                     el(PanelBody, { title: 'Testimonials Settings', initialOpen: true },
                         el(RangeControl, {
@@ -37,10 +48,12 @@
                 el('div', { className: 'hrcef-testimonials-editor' },
                     el(ServerSideRender, {
                         block: 'hrcef/testimonials',
-                        attributes: attributes
+                        attributes: {
+                            count: attributes.count
+                        }
                     })
                 )
-            ];
+            );
         },
         
         save: function() {
@@ -52,5 +65,6 @@
     window.wp.blocks,
     window.wp.element,
     window.wp.blockEditor,
-    window.wp.components
+    window.wp.components,
+    window.wp.serverSideRender
 );

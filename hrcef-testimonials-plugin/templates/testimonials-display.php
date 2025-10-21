@@ -3,6 +3,7 @@
  * Template for displaying testimonials
  * 
  * @var array $testimonials Array of testimonial post objects
+ * @var string $align Alignment class (wide, full, or empty)
  */
 
 if (empty($testimonials)) {
@@ -10,9 +11,10 @@ if (empty($testimonials)) {
 }
 
 $default_image = HRCEF_TESTIMONIALS_PLUGIN_URL . 'assets/images/student-placeholder-6.svg';
+$align_class = !empty($align) ? 'align' . $align : '';
 ?>
 
-<div class="hrcef-testimonials-section">
+<div class="hrcef-testimonials-section <?php echo esc_attr($align_class); ?>">
     <div class="hrcef-testimonials-grid" data-testimonials-grid>
         <?php foreach ($testimonials as $testimonial): 
             $author = get_post_meta($testimonial->ID, '_hrcef_author', true);
@@ -36,10 +38,4 @@ $default_image = HRCEF_TESTIMONIALS_PLUGIN_URL . 'assets/images/student-placehol
         </div>
         <?php endforeach; ?>
     </div>
-    <button class="hrcef-refresh-button" data-testimonials-refresh aria-label="<?php esc_attr_e('Load new testimonials', 'hrcef-testimonials'); ?>">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
-        </svg>
-        <?php _e('Load New Testimonials', 'hrcef-testimonials'); ?>
-    </button>
 </div>

@@ -6,11 +6,21 @@
     padding: 60px 20px;
 }
 
+/* Full width alignment */
+.hrcef-testimonials-section.alignfull {
+    max-width: 100%;
+    padding: 60px 40px;
+}
+
+/* Wide alignment */
+.hrcef-testimonials-section.alignwide {
+    max-width: 1600px;
+}
+
 .hrcef-testimonials-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    margin-bottom: 40px;
 }
 
 /* Testimonial Card */
@@ -105,42 +115,6 @@
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.9);
     font-style: italic;
-}
-
-/* Refresh Button */
-.hrcef-refresh-button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 auto;
-    padding: 14px 28px;
-    background: #0033A0;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 51, 160, 0.3);
-}
-
-.hrcef-refresh-button:hover {
-    background: #002a85;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 51, 160, 0.4);
-}
-
-.hrcef-refresh-button:active {
-    transform: translateY(0);
-}
-
-.hrcef-refresh-button svg {
-    transition: transform 0.3s ease;
-}
-
-.hrcef-refresh-button:hover svg {
-    transform: rotate(180deg);
 }
 
 /* Responsive Design */
