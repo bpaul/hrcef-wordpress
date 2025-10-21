@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "quote": "My Scholarship from the Hood River Education Foundation allowed me be the first in my family to go to college",
+    "author": "A. N. Student",
+    "institution": "Oregon State",
+    "image": "images/student-placeholder-1.svg"
+  },
+  {
+    "id": 2,
+    "quote": "The Impact Teaching Grant gave me the resources to bring hands-on science experiments to my classroom. My students are more engaged than ever!",
+    "author": "Sarah Martinez",
+    "institution": "Hood River Valley High School",
+    "image": "images/student-placeholder-2.svg"
+  },
+  {
+    "id": 3,
+    "quote": "Thanks to HRCEF, I was able to pursue my dream of becoming an engineer. The scholarship made all the difference in my ability to afford college.",
+    "author": "Michael Chen",
+    "institution": "University of Oregon",
+    "image": "images/student-placeholder-3.svg"
+  },
+  {
+    "id": 4,
+    "quote": "The field trip grant allowed our students to visit the Oregon Coast and learn about marine biology firsthand. It was a transformative experience.",
+    "author": "Jennifer Thompson",
+    "institution": "Mid Valley Elementary",
+    "image": "images/student-placeholder-4.svg"
+  },
+  {
+    "id": 5,
+    "quote": "I never thought college was possible for me. The HRCEF scholarship opened doors I didn't know existed.",
+    "author": "Maria Rodriguez",
+    "institution": "Portland Community College",
+    "image": "images/student-placeholder-5.svg"
+  },
+  {
+    "id": 6,
+    "quote": "The continuing education scholarship helped me complete my degree while working full-time. I'm now the first college graduate in my family.",
+    "author": "David Park",
+    "institution": "Oregon State University",
+    "image": "images/student-placeholder-6.svg"
+  }
+]

@@ -1,0 +1,225 @@
+/* HRCEF Testimonials Plugin Styles */
+
+.hrcef-testimonials-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.hrcef-testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Testimonial Card */
+.hrcef-testimonial-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+}
+
+.hrcef-testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.hrcef-testimonial-card:active {
+    transform: translateY(-4px);
+}
+
+.hrcef-testimonial-content-top {
+    padding: 50px 40px 80px;
+    background: white;
+    border-radius: 16px 16px 0 0;
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+}
+
+.hrcef-quote-icon {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    font-size: 120px;
+    line-height: 0.8;
+    color: #f0f0f0;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    opacity: 0.5;
+}
+
+.hrcef-testimonial-quote {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #374151;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    margin: 0;
+}
+
+.hrcef-testimonial-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 6px solid white;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -70px;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hrcef-testimonial-footer {
+    background: linear-gradient(135deg, #0066B3, #008B8B);
+    padding: 90px 30px 40px;
+    border-radius: 0 0 16px 16px;
+    text-align: center;
+    position: relative;
+}
+
+.hrcef-testimonial-attribution {
+    color: white;
+}
+
+.hrcef-author-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 8px;
+}
+
+.hrcef-author-institution {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+/* Refresh Button */
+.hrcef-refresh-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 14px 28px;
+    background: #0033A0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 51, 160, 0.3);
+}
+
+.hrcef-refresh-button:hover {
+    background: #002a85;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 51, 160, 0.4);
+}
+
+.hrcef-refresh-button:active {
+    transform: translateY(0);
+}
+
+.hrcef-refresh-button svg {
+    transition: transform 0.3s ease;
+}
+
+.hrcef-refresh-button:hover svg {
+    transform: rotate(180deg);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hrcef-testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hrcef-testimonials-section {
+        padding: 40px 16px;
+    }
+
+    .hrcef-testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .hrcef-testimonial-content-top {
+        padding: 40px 30px 70px;
+        min-height: 240px;
+    }
+
+    .hrcef-testimonial-avatar {
+        width: 120px;
+        height: 120px;
+        bottom: -60px;
+    }
+
+    .hrcef-testimonial-footer {
+        padding: 80px 24px 30px;
+    }
+
+    .hrcef-quote-icon {
+        font-size: 80px;
+    }
+
+    .hrcef-testimonial-quote {
+        font-size: 1.125rem;
+    }
+
+    .hrcef-author-name {
+        font-size: 1.125rem;
+    }
+
+    .hrcef-author-institution {
+        font-size: 0.9375rem;
+    }
+}
+
+/* Animation */
+.hrcef-testimonial-card {
+    animation: hrcefFadeInUp 0.6s ease-out;
+}
+
+.hrcef-testimonial-card:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.hrcef-testimonial-card:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes hrcefFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Editor Styles */
+.hrcef-testimonials-editor {
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
