@@ -199,7 +199,7 @@ When creating a new version:
 
 **Latest Versions:**
 - Testimonials: v1.0.4 (`hrcef-testimonials-plugin-v1.0.4.zip`)
-- Announcement Banner: v1.0.0 (`hrcef-announcement-banner-v1.0.0.zip`)
+- Announcement Banner: v1.0.1 (`hrcef-announcement-banner-v1.0.1.zip`)
 
 ## Site Migration Notes (Future Reference)
 
@@ -221,13 +221,14 @@ If you ever need to migrate from WordPress.com:
 
 ### 2. HRCEF Announcement Banner Plugin
 **Location:** `/hrcef-announcement-banner/`
-**Current Version:** v1.0.0
-**Zip File:** `hrcef-announcement-banner-v1.0.0.zip`
+**Current Version:** v1.0.1
+**Zip File:** `hrcef-announcement-banner-v1.0.1.zip`
 **Status:** Ready for installation
 
 **Features:**
 - Fixed banner at top of browser
 - Dismissible with localStorage
+- Content versioning (banner reappears when updated)
 - 4 color schemes (Red, Blue, Orange, Green)
 - 6 icon options
 - Link to posts/pages/custom URLs

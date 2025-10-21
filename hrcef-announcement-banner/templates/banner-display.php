@@ -20,9 +20,12 @@ if ($settings['link_type'] === 'custom') {
 
 // Color scheme class
 $color_class = 'hrcef-banner-' . esc_attr($settings['color_scheme']);
+
+// Content version for dismissal tracking
+$content_version = isset($settings['content_version']) ? $settings['content_version'] : 1;
 ?>
 
-<div class="hrcef-announcement-banner <?php echo $color_class; ?>" id="hrcef-announcement-banner" data-dismissible="<?php echo $settings['dismissible'] ? '1' : '0'; ?>">
+<div class="hrcef-announcement-banner <?php echo $color_class; ?>" id="hrcef-announcement-banner" data-dismissible="<?php echo $settings['dismissible'] ? '1' : '0'; ?>" data-version="<?php echo esc_attr($content_version); ?>">
     <div class="hrcef-banner-content">
         <div class="hrcef-banner-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

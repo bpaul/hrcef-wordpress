@@ -1,13 +1,14 @@
 (function() {
     'use strict';
     
-    const STORAGE_KEY = 'hrcef_banner_dismissed';
     const banner = document.getElementById('hrcef-announcement-banner');
     
     if (!banner) return;
     
     const closeButton = document.getElementById('hrcef-banner-close');
     const isDismissible = banner.getAttribute('data-dismissible') === '1';
+    const bannerVersion = banner.getAttribute('data-version') || '1';
+    const STORAGE_KEY = 'hrcef_banner_dismissed_v' + bannerVersion;
     
     // Check if banner was previously dismissed
     function isBannerDismissed() {

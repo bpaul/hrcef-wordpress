@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Announcement Banner
  * Plugin URI: https://hrcef.org
  * Description: A dismissible announcement banner for highlighting important posts, events, and announcements on the HRCEF website
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_BANNER_VERSION', '1.0.0');
+define('HRCEF_BANNER_VERSION', '1.0.1');
 define('HRCEF_BANNER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_BANNER_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -67,7 +67,8 @@ class HRCEF_Announcement_Banner {
             'dismissible' => true,
             'show_on' => 'all',
             'start_date' => '',
-            'end_date' => ''
+            'end_date' => '',
+            'content_version' => 1
         );
         
         add_option('hrcef_banner_settings', $defaults);
@@ -245,6 +246,20 @@ class HRCEF_Announcement_Banner {
             wp_send_json_error(array('message' => 'Insufficient permissions'));
         }
         
+        // Get current settings to check for content changes
+        $current_settings = get_option('hrcef_banner_settings');
+        $current_version = isset($current_settings['content_version']) ? $current_settings['content_version'] : 1;
+        
+        // Check if content has changed (title, description, or link)
+        $content_changed = (
+            $current_settings['title'] !== $_POST['title'] ||
+            $current_settings['description'] !== $_POST['description'] ||
+            $current_settings['link_url'] !== $_POST['link_url']
+        );
+        
+        // Increment version if content changed
+        $new_version = $content_changed ? $current_version + 1 : $current_version;
+        
         // Sanitize and save settings
         $settings = array(
             'enabled' => isset($_POST['enabled']) ? (bool)$_POST['enabled'] : false,
@@ -258,12 +273,17 @@ class HRCEF_Announcement_Banner {
             'dismissible' => isset($_POST['dismissible']) ? (bool)$_POST['dismissible'] : false,
             'show_on' => sanitize_text_field($_POST['show_on']),
             'start_date' => sanitize_text_field($_POST['start_date']),
-            'end_date' => sanitize_text_field($_POST['end_date'])
+            'end_date' => sanitize_text_field($_POST['end_date']),
+            'content_version' => $new_version
         );
         
         update_option('hrcef_banner_settings', $settings);
         
-        wp_send_json_success(array('message' => 'Settings saved successfully'));
+        $message = $content_changed ? 
+            'Settings saved successfully. Banner content updated - dismissed users will see it again!' : 
+            'Settings saved successfully';
+        
+        wp_send_json_success(array('message' => $message));
     }
     
     /**

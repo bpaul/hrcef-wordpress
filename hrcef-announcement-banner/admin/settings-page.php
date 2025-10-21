@@ -22,6 +22,12 @@ $posts = get_posts(array('numberposts' => 20, 'post_status' => 'publish'));
     <!-- Banner Preview -->
     <div class="hrcef-banner-preview-section">
         <h2><?php _e('Live Preview', 'hrcef-announcement-banner'); ?></h2>
+        <p class="description" style="margin-bottom: 12px;">
+            <?php 
+            $version = isset($settings['content_version']) ? $settings['content_version'] : 1;
+            printf(__('Content Version: %d (increments automatically when title, description, or link changes)', 'hrcef-announcement-banner'), $version); 
+            ?>
+        </p>
         <div class="hrcef-banner-preview-wrapper">
             <div class="hrcef-announcement-banner-preview <?php echo esc_attr($settings['color_scheme']); ?>" id="banner-preview">
                 <div class="hrcef-banner-content">

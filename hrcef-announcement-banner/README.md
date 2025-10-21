@@ -145,9 +145,45 @@ Edit `assets/css/banner.css` for styling
 - WordPress 5.2 or higher (for `wp_body_open` hook)
 - PHP 7.0 or higher
 
-## localStorage Key
+## Content Versioning
 
-The plugin uses `hrcef_banner_dismissed` as the localStorage key to track dismissal state.
+The plugin automatically tracks content versions to ensure users see updated banners even if they dismissed a previous version.
+
+### How It Works
+
+1. **Content Version Tracking** - Each banner has a `content_version` number
+2. **Auto-Increment** - Version increments automatically when you change:
+   - Title
+   - Description
+   - Link URL
+3. **Version-Based Dismissal** - localStorage key includes version: `hrcef_banner_dismissed_v1`, `hrcef_banner_dismissed_v2`, etc.
+4. **Reappearance** - When content changes, dismissed users will see the new banner
+
+### Example
+
+- User dismisses banner with "Scholarship Deadline" (version 1)
+- Admin updates banner to "New Event Announcement" (version auto-increments to 2)
+- User sees the new banner even though they dismissed version 1
+
+### What Triggers Version Increment
+
+✅ **Increments version:**
+- Changing title text
+- Changing description text
+- Changing link URL
+
+❌ **Does NOT increment version:**
+- Changing button text
+- Changing color scheme
+- Changing icon
+- Changing schedule dates
+- Enabling/disabling banner
+
+## localStorage Keys
+
+The plugin uses version-specific localStorage keys to track dismissal state:
+- Format: `hrcef_banner_dismissed_v[version]`
+- Example: `hrcef_banner_dismissed_v1`, `hrcef_banner_dismissed_v2`
 
 ## Hooks & Filters
 
@@ -194,6 +230,13 @@ Increase z-index in `assets/css/banner.css`:
 For issues or questions, contact the HRCEF web team.
 
 ## Changelog
+
+### Version 1.0.1
+- Added content versioning system
+- Banner reappears when content is updated (title, description, or link)
+- Auto-increments version number on content changes
+- Shows helpful message when content is updated
+- Displays current content version in admin
 
 ### Version 1.0.0
 - Initial release
