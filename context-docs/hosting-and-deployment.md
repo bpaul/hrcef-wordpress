@@ -126,18 +126,80 @@ Since you have a Business Plan, you can install custom plugins:
 - [ ] Verify display and functionality
 - [ ] Deploy to production pages
 
+## Naming Conventions
+
+### Plugin Naming
+All HRCEF custom plugins must follow this naming convention:
+
+**Format:** `hrcef-[plugin-name]`
+
+**Examples:**
+- `hrcef-testimonials-plugin`
+- `hrcef-announcement-banner`
+- `hrcef-scholarship-portal`
+
+**Rules:**
+- Always prefix with `hrcef-`
+- Use lowercase letters
+- Separate words with hyphens
+- Use descriptive, clear names
+- Avoid abbreviations unless widely understood
+
+### File Naming
+- **Main plugin file:** `hrcef-[plugin-name].php`
+- **Folder name:** `hrcef-[plugin-name]/`
+- **Zip file:** `hrcef-[plugin-name]-v[version].zip`
+
+### Version Numbering
+
+**Format:** `v[major].[minor].[patch]`
+
+**Example:** `v1.0.4`
+
+**Rules:**
+- **Major (1.x.x)** - Breaking changes, major new features
+- **Minor (x.1.x)** - New features, non-breaking changes
+- **Patch (x.x.1)** - Bug fixes, minor improvements
+
+**IMPORTANT:** Version numbers must be incremented with each build:
+1. Update version in plugin header comment
+2. Update version constant (e.g., `HRCEF_BANNER_VERSION`)
+3. Include version in zip filename
+4. Update version history in this document
+
+### CSS/JS Class Naming
+- **Prefix:** `hrcef-`
+- **Format:** `hrcef-[component]-[element]`
+- **Examples:**
+  - `.hrcef-banner-content`
+  - `.hrcef-testimonial-card`
+  - `.hrcef-toggle-switch`
+
+### Database Options
+- **Prefix:** `hrcef_`
+- **Format:** `hrcef_[plugin]_[setting]`
+- **Examples:**
+  - `hrcef_banner_settings`
+  - `hrcef_testimonial_count`
+
+### JavaScript Variables
+- **Global objects:** `hrcefBanner`, `hrcefTestimonials`
+- **localStorage keys:** `hrcef_banner_dismissed`, `hrcef_[feature]_[state]`
+
 ## Version Management
 
 **Current Practice:** Keep only the latest zip file in the project root.
 
 When creating a new version:
-1. Update version number in `hrcef-testimonials.php` (header and constant)
-2. Create new zip: `hrcef-testimonials-plugin-v1.0.X.zip`
+1. **Increment version number** in plugin PHP file (header and constant)
+2. Create new zip: `hrcef-[plugin-name]-v[version].zip`
 3. Delete previous version zip file
 4. Update version history in this document
+5. Test thoroughly before deployment
 
-**Latest Version:** v1.0.4
-**Zip File:** `hrcef-testimonials-plugin-v1.0.4.zip`
+**Latest Versions:**
+- Testimonials: v1.0.4 (`hrcef-testimonials-plugin-v1.0.4.zip`)
+- Announcement Banner: v1.0.0 (`hrcef-announcement-banner-v1.0.0.zip`)
 
 ## Site Migration Notes (Future Reference)
 
@@ -146,6 +208,33 @@ If you ever need to migrate from WordPress.com:
 - Download plugin files via SFTP
 - The plugin is portable and will work on any WordPress installation
 - Database tables are standard WordPress custom post types
+
+---
+
+## HRCEF Plugins
+
+### 1. HRCEF Testimonials Plugin
+**Location:** `/hrcef-testimonials-plugin/`
+**Current Version:** v1.0.4
+**Zip File:** `hrcef-testimonials-plugin-v1.0.4.zip`
+**Status:** Installed and active
+
+### 2. HRCEF Announcement Banner Plugin
+**Location:** `/hrcef-announcement-banner/`
+**Current Version:** v1.0.0
+**Zip File:** `hrcef-announcement-banner-v1.0.0.zip`
+**Status:** Ready for installation
+
+**Features:**
+- Fixed banner at top of browser
+- Dismissible with localStorage
+- 4 color schemes (Red, Blue, Orange, Green)
+- 6 icon options
+- Link to posts/pages/custom URLs
+- Schedule support (start/end dates)
+- Page targeting (all pages or homepage)
+- Live preview in admin
+- Responsive design
 
 ---
 

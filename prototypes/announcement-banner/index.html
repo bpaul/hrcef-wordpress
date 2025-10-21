@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRCEF Announcement Banner Prototype</title>
+    <link rel="stylesheet" href="css/banner.css">
+</head>
+<body>
+    <!-- Example page content -->
+    <header class="site-header">
+        <div class="container">
+            <h1>Hood River County Education Foundation</h1>
+            <nav>
+                <a href="#">About</a>
+                <a href="#">Scholarships</a>
+                <a href="#">Grants</a>
+                <a href="#">Donate</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Announcement Banner -->
+    <div class="announcement-banner" id="announcement-banner">
+        <div class="banner-content">
+            <div class="banner-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="banner-text">
+                <strong>New Scholarship Opportunity!</strong>
+                <span>Applications now open for the 2025-26 academic year. Apply by March 15th.</span>
+            </div>
+            <a href="#" class="banner-link">Learn More →</a>
+            <button class="banner-close" id="banner-close" aria-label="Close announcement">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/>
+                    <line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h2>Welcome to HRCEF</h2>
+            <p>We're a non-profit organization that supports Hood River County School District students, families and educators through scholarships and grants.</p>
+            
+            <div class="demo-section">
+                <h3>Banner Demo Controls</h3>
+                <p>The banner above can be dismissed by clicking the X button. It will remember your preference using localStorage.</p>
+                <button id="show-banner" class="demo-button">Show Banner Again</button>
+                <button id="clear-storage" class="demo-button secondary">Clear Storage</button>
+            </div>
+
+            <div class="demo-section">
+                <h3>Banner Variations</h3>
+                <p>Click to preview different banner styles:</p>
+                <button class="demo-button" onclick="changeBannerContent('scholarship')">Scholarship Announcement</button>
+                <button class="demo-button" onclick="changeBannerContent('event')">Upcoming Event</button>
+                <button class="demo-button" onclick="changeBannerContent('deadline')">Important Deadline</button>
+                <button class="demo-button" onclick="changeBannerContent('success')">Success Story</button>
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Scholarships</h3>
+                    <p>We manage more than 55 scholarship funds that make awards to graduating seniors and college students.</p>
+                </div>
+                <div class="card">
+                    <h3>Teaching Grants</h3>
+                    <p>Awards for teachers & staff who find better ways to teach, new subjects to explore, and interesting experiments to try.</p>
+                </div>
+                <div class="card">
+                    <h3>Opportunity Fund</h3>
+                    <p>A flexible support fund dedicated to increasing program access and opportunities for students and families.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/banner.js"></script>
+</body>
+</html>

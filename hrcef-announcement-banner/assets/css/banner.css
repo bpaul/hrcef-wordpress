@@ -1,0 +1,193 @@
+/* HRCEF Announcement Banner - Frontend Styles */
+
+/* Add padding to body to prevent content from hiding behind fixed banner */
+body.hrcef-banner-visible {
+    padding-top: 72px;
+}
+
+/* Announcement Banner */
+.hrcef-announcement-banner {
+    background: linear-gradient(135deg, #C41E3A, #E63946);
+    color: white;
+    padding: 16px 0;
+    box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    animation: hrcefSlideDown 0.4s ease-out;
+}
+
+.hrcef-announcement-banner.hrcef-banner-hidden {
+    display: none;
+}
+
+.hrcef-banner-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.hrcef-banner-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hrcef-banner-icon svg {
+    color: white;
+}
+
+.hrcef-banner-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hrcef-banner-text strong {
+    font-size: 1.125rem;
+    font-weight: 600;
+    display: block;
+}
+
+.hrcef-banner-text span {
+    font-size: 0.9375rem;
+    opacity: 0.95;
+}
+
+.hrcef-banner-link {
+    flex-shrink: 0;
+    background: white;
+    color: #C41E3A;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.hrcef-banner-link:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hrcef-banner-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+}
+
+.hrcef-banner-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.hrcef-banner-close:active {
+    transform: rotate(90deg) scale(0.95);
+}
+
+/* Color Variations */
+.hrcef-banner-event {
+    background: linear-gradient(135deg, #0066B3, #008B8B);
+    box-shadow: 0 4px 12px rgba(0, 102, 179, 0.3);
+}
+
+.hrcef-banner-event .hrcef-banner-link {
+    color: #0066B3;
+}
+
+.hrcef-banner-deadline {
+    background: linear-gradient(135deg, #D97706, #F59E0B);
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+}
+
+.hrcef-banner-deadline .hrcef-banner-link {
+    color: #D97706;
+}
+
+.hrcef-banner-success {
+    background: linear-gradient(135deg, #059669, #10B981);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.hrcef-banner-success .hrcef-banner-link {
+    color: #059669;
+}
+
+/* Animation */
+@keyframes hrcefSlideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hrcef-banner-content {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .hrcef-banner-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .hrcef-banner-text {
+        flex: 1 1 100%;
+        order: 2;
+    }
+
+    .hrcef-banner-text strong {
+        font-size: 1rem;
+    }
+
+    .hrcef-banner-text span {
+        font-size: 0.875rem;
+    }
+
+    .hrcef-banner-link {
+        order: 3;
+        flex: 1;
+        text-align: center;
+        font-size: 0.875rem;
+        padding: 8px 16px;
+    }
+
+    .hrcef-banner-close {
+        order: 1;
+        margin-left: auto;
+    }
+
+    body.hrcef-banner-visible {
+        padding-top: 90px;
+    }
+}

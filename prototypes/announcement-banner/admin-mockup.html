@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRCEF Banner Settings - WordPress Admin Mockup</title>
+    <link rel="stylesheet" href="css/admin-mockup.css">
+</head>
+<body class="wp-admin">
+    <!-- WordPress Admin Bar -->
+    <div class="wp-admin-bar">
+        <div class="wp-admin-bar-left">
+            <span class="wp-logo">W</span>
+            <span class="site-name">Hood River County Education Foundation</span>
+        </div>
+        <div class="wp-admin-bar-right">
+            <span class="user-info">👤 Admin</span>
+        </div>
+    </div>
+
+    <div class="wp-admin-wrapper">
+        <!-- WordPress Admin Sidebar -->
+        <div class="wp-admin-sidebar">
+            <ul class="admin-menu">
+                <li><a href="#"><span class="dashicons">📊</span> Dashboard</a></li>
+                <li><a href="#"><span class="dashicons">📝</span> Posts</a></li>
+                <li><a href="#"><span class="dashicons">📄</span> Pages</a></li>
+                <li><a href="#"><span class="dashicons">💬</span> Testimonials</a></li>
+                <li class="active"><a href="#"><span class="dashicons">📢</span> Announcement Banner</a></li>
+                <li><a href="#"><span class="dashicons">🎨</span> Appearance</a></li>
+                <li><a href="#"><span class="dashicons">🔌</span> Plugins</a></li>
+                <li><a href="#"><span class="dashicons">👥</span> Users</a></li>
+                <li><a href="#"><span class="dashicons">⚙️</span> Settings</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Admin Content -->
+        <div class="wp-admin-content">
+            <div class="wrap">
+                <h1 class="wp-heading-inline">Announcement Banner Settings</h1>
+                <a href="#" class="page-title-action">Preview Banner</a>
+                <hr class="wp-header-end">
+
+                <!-- Success Message (example) -->
+                <div class="notice notice-success is-dismissible" style="display: none;" id="success-notice">
+                    <p><strong>Settings saved.</strong></p>
+                    <button type="button" class="notice-dismiss"><span>×</span></button>
+                </div>
+
+                <!-- Banner Preview -->
+                <div class="banner-preview-section">
+                    <h2>Live Preview</h2>
+                    <div class="banner-preview-wrapper">
+                        <div class="announcement-banner-preview" id="banner-preview">
+                            <div class="banner-content">
+                                <div class="banner-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                        <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                                    </svg>
+                                </div>
+                                <div class="banner-text">
+                                    <strong id="preview-title">New Scholarship Opportunity!</strong>
+                                    <span id="preview-description">Applications now open for the 2025-26 academic year.</span>
+                                </div>
+                                <a href="#" class="banner-link" id="preview-link-text">Learn More →</a>
+                                <button class="banner-close" aria-label="Close">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"/>
+                                        <line x1="6" y1="6" x2="18" y2="18"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Form -->
+                <form method="post" action="" id="banner-settings-form">
+                    <!-- Enable/Disable Banner -->
+                    <div class="postbox">
+                        <div class="postbox-header">
+                            <h2>Banner Status</h2>
+                        </div>
+                        <div class="inside">
+                            <table class="form-table">
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_enabled">Enable Banner</label>
+                                    </th>
+                                    <td>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="banner_enabled" name="banner_enabled" checked>
+                                            <span class="toggle-slider"></span>
+                                        </label>
+                                        <p class="description">Show the announcement banner on your site</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Banner Content -->
+                    <div class="postbox">
+                        <div class="postbox-header">
+                            <h2>Banner Content</h2>
+                        </div>
+                        <div class="inside">
+                            <table class="form-table">
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_title">Title</label>
+                                    </th>
+                                    <td>
+                                        <input type="text" id="banner_title" name="banner_title" class="regular-text" value="New Scholarship Opportunity!" placeholder="Enter banner title">
+                                        <p class="description">The main heading text (max 60 characters recommended)</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_description">Description</label>
+                                    </th>
+                                    <td>
+                                        <textarea id="banner_description" name="banner_description" rows="3" class="large-text" placeholder="Enter banner description">Applications now open for the 2025-26 academic year.</textarea>
+                                        <p class="description">Supporting text (max 120 characters recommended)</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_link_type">Link To</label>
+                                    </th>
+                                    <td>
+                                        <select id="banner_link_type" name="banner_link_type" class="regular-text">
+                                            <option value="post">Blog Post</option>
+                                            <option value="page">Page</option>
+                                            <option value="custom">Custom URL</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="post-selector">
+                                    <th scope="row">
+                                        <label for="banner_post">Select Post</label>
+                                    </th>
+                                    <td>
+                                        <select id="banner_post" name="banner_post" class="regular-text">
+                                            <option value="">-- Select a Post --</option>
+                                            <option value="123">HRCEF Celebrates a Successful 2024-25 School Year</option>
+                                            <option value="124">Congratulations, 2025 HRCEF Scholarship Recipients!</option>
+                                            <option value="125">Let's Taste! The Columbia Gorge Wine Festival 2025</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr id="custom-url" style="display: none;">
+                                    <th scope="row">
+                                        <label for="banner_custom_url">Custom URL</label>
+                                    </th>
+                                    <td>
+                                        <input type="url" id="banner_custom_url" name="banner_custom_url" class="regular-text" placeholder="https://example.com">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_link_text">Button Text</label>
+                                    </th>
+                                    <td>
+                                        <input type="text" id="banner_link_text" name="banner_link_text" class="regular-text" value="Learn More →" placeholder="e.g., Learn More, Read More, Apply Now">
+                                        <p class="description">Text for the call-to-action button</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Banner Style -->
+                    <div class="postbox">
+                        <div class="postbox-header">
+                            <h2>Banner Style</h2>
+                        </div>
+                        <div class="inside">
+                            <table class="form-table">
+                                <tr>
+                                    <th scope="row">
+                                        <label>Color Scheme</label>
+                                    </th>
+                                    <td>
+                                        <div class="color-scheme-options">
+                                            <label class="color-scheme-option">
+                                                <input type="radio" name="banner_color" value="default" checked>
+                                                <span class="color-preview" style="background: linear-gradient(135deg, #C41E3A, #E63946);"></span>
+                                                <span class="color-label">Alert Red (Default)</span>
+                                            </label>
+                                            <label class="color-scheme-option">
+                                                <input type="radio" name="banner_color" value="event">
+                                                <span class="color-preview" style="background: linear-gradient(135deg, #0066B3, #008B8B);"></span>
+                                                <span class="color-label">HRCEF Blue</span>
+                                            </label>
+                                            <label class="color-scheme-option">
+                                                <input type="radio" name="banner_color" value="deadline">
+                                                <span class="color-preview" style="background: linear-gradient(135deg, #D97706, #F59E0B);"></span>
+                                                <span class="color-label">Urgent Orange</span>
+                                            </label>
+                                            <label class="color-scheme-option">
+                                                <input type="radio" name="banner_color" value="success">
+                                                <span class="color-preview" style="background: linear-gradient(135deg, #059669, #10B981);"></span>
+                                                <span class="color-label">Success Green</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_icon">Icon</label>
+                                    </th>
+                                    <td>
+                                        <select id="banner_icon" name="banner_icon" class="regular-text">
+                                            <option value="graduation">🎓 Graduation Cap</option>
+                                            <option value="calendar">📅 Calendar</option>
+                                            <option value="megaphone">📢 Megaphone</option>
+                                            <option value="star">⭐ Star</option>
+                                            <option value="bell">🔔 Bell</option>
+                                            <option value="trophy">🏆 Trophy</option>
+                                            <option value="none">No Icon</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Schedule -->
+                    <div class="postbox">
+                        <div class="postbox-header">
+                            <h2>Schedule (Optional)</h2>
+                        </div>
+                        <div class="inside">
+                            <table class="form-table">
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_start_date">Start Date</label>
+                                    </th>
+                                    <td>
+                                        <input type="datetime-local" id="banner_start_date" name="banner_start_date" class="regular-text">
+                                        <p class="description">Leave blank to show immediately</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_end_date">End Date</label>
+                                    </th>
+                                    <td>
+                                        <input type="datetime-local" id="banner_end_date" name="banner_end_date" class="regular-text">
+                                        <p class="description">Leave blank to show indefinitely</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Options -->
+                    <div class="postbox">
+                        <div class="postbox-header">
+                            <h2>Advanced Options</h2>
+                        </div>
+                        <div class="inside">
+                            <table class="form-table">
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_dismissible">Dismissible</label>
+                                    </th>
+                                    <td>
+                                        <label>
+                                            <input type="checkbox" id="banner_dismissible" name="banner_dismissible" checked>
+                                            Allow users to close the banner
+                                        </label>
+                                        <p class="description">If enabled, users can dismiss the banner and it won't show again</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        <label for="banner_pages">Show On</label>
+                                    </th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="banner_pages" value="all" checked>
+                                            All pages
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="banner_pages" value="home">
+                                            Homepage only
+                                        </label><br>
+                                        <label>
+                                            <input type="radio" name="banner_pages" value="custom">
+                                            Specific pages
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Save Button -->
+                    <p class="submit">
+                        <button type="submit" class="button button-primary button-large">Save Settings</button>
+                        <button type="button" class="button button-secondary button-large" id="reset-banner">Reset to Defaults</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin-mockup.js"></script>
+</body>
+</html>
