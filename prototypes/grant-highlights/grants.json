@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "description": "Students explored local ecosystems through hands-on field research, collecting water samples and studying native plant species along the Columbia River.",
+    "school": "Hood River Middle School",
+    "teacher": "Sarah Martinez",
+    "year": "2024",
+    "image": "images/grant-1.svg"
+  },
+  {
+    "id": 2,
+    "description": "A robotics program that introduced students to coding and engineering principles through building and programming competitive robots.",
+    "school": "Wy'east Middle School",
+    "teacher": "Michael Chen",
+    "year": "2023",
+    "image": "images/grant-2.svg"
+  },
+  {
+    "id": 3,
+    "description": "Interactive art installation project where students created murals depicting Hood River's cultural diversity and agricultural heritage.",
+    "school": "Hood River Valley High School",
+    "teacher": "Jennifer Lopez",
+    "year": "2024",
+    "image": "images/grant-3.svg"
+  },
+  {
+    "id": 4,
+    "description": "Farm-to-table cooking program teaching students about nutrition, sustainable agriculture, and culinary skills using local ingredients.",
+    "school": "Parkdale Elementary",
+    "teacher": "David Thompson",
+    "year": "2023",
+    "image": "images/grant-4.svg"
+  },
+  {
+    "id": 5,
+    "description": "Outdoor education program providing students with wilderness survival skills, orienteering, and environmental stewardship training.",
+    "school": "May Street Elementary",
+    "teacher": "Emily Rodriguez",
+    "year": "2024",
+    "image": "images/grant-5.svg"
+  },
+  {
+    "id": 6,
+    "description": "Music technology lab where students learned digital music production, sound engineering, and composition using professional software.",
+    "school": "Hood River Valley High School",
+    "teacher": "James Wilson",
+    "year": "2023",
+    "image": "images/grant-6.svg"
+  }
+]

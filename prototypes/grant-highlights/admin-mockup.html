@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Highlights - WordPress Admin</title>
+    <link rel="stylesheet" href="css/admin-mockup.css">
+</head>
+<body>
+    <!-- WordPress Admin Bar -->
+    <div class="wp-admin-bar">
+        <div class="wp-admin-bar-left">
+            <span class="wp-logo">W</span>
+            <a href="#">Hood River County Education Foundation</a>
+            <a href="#">Visit Site</a>
+        </div>
+        <div class="wp-admin-bar-right">
+            <span>Howdy, Admin</span>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <!-- WordPress Sidebar -->
+        <div class="wp-sidebar">
+            <div class="wp-menu">
+                <div class="wp-menu-item">Dashboard</div>
+                <div class="wp-menu-item">Posts</div>
+                <div class="wp-menu-item">Media</div>
+                <div class="wp-menu-item">Pages</div>
+                <div class="wp-menu-item active">
+                    <span class="dashicons">📚</span>
+                    Grant Highlights
+                </div>
+                <div class="wp-menu-item">Testimonials</div>
+                <div class="wp-menu-item">Settings</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-content">
+            <div class="admin-header">
+                <h1>Add New Grant Highlight</h1>
+                <a href="#" class="button-secondary">View All Highlights</a>
+            </div>
+
+            <form class="grant-form">
+                <!-- Grant Description -->
+                <div class="form-section">
+                    <label for="grant-description">Grant Description *</label>
+                    <textarea 
+                        id="grant-description" 
+                        rows="6" 
+                        placeholder="Describe the grant project and its impact on students..."
+                    >Students explored local ecosystems through hands-on field research, collecting water samples and studying native plant species along the Columbia River.</textarea>
+                    <p class="description">A brief description of the grant project (recommended: 150-200 characters)</p>
+                </div>
+
+                <!-- School Information -->
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="school-name">School Name *</label>
+                        <input type="text" id="school-name" value="Hood River Middle School" placeholder="Enter school name">
+                    </div>
+                    <div class="form-field">
+                        <label for="teacher-name">Teacher Name *</label>
+                        <input type="text" id="teacher-name" value="Sarah Martinez" placeholder="Enter teacher name">
+                    </div>
+                </div>
+
+                <!-- Grant Year -->
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="grant-year">Grant Year *</label>
+                        <select id="grant-year">
+                            <option value="">Select Year</option>
+                            <option value="2025">2025</option>
+                            <option value="2024" selected>2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <label for="grant-status">Status</label>
+                        <select id="grant-status">
+                            <option value="publish" selected>Published</option>
+                            <option value="draft">Draft</option>
+                            <option value="pending">Pending Review</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Featured Image Section -->
+                <div class="form-section">
+                    <h2>Featured Image</h2>
+                    
+                    <!-- Image Selection Tabs -->
+                    <div class="image-tabs">
+                        <button type="button" class="tab-button active" data-tab="upload">Upload Photo</button>
+                        <button type="button" class="tab-button" data-tab="themed">Themed Images</button>
+                    </div>
+
+                    <!-- Upload Tab -->
+                    <div class="tab-content active" id="upload-tab">
+                        <div class="image-upload-area">
+                            <div class="current-image">
+                                <img src="images/grant-1.svg" alt="Current grant image" id="current-image-preview">
+                            </div>
+                            <div class="upload-buttons">
+                                <button type="button" class="button-primary">Upload Custom Photo</button>
+                                <button type="button" class="button-secondary">Remove Image</button>
+                            </div>
+                            <p class="description">Upload a photo from the grant project. Recommended size: 800x400px</p>
+                        </div>
+                    </div>
+
+                    <!-- Themed Images Tab -->
+                    <div class="tab-content" id="themed-tab">
+                        <p class="description">Select a themed placeholder image that matches your grant type:</p>
+                        <div class="themed-images-grid">
+                            <div class="themed-image-option selected" data-image="grant-1.svg">
+                                <img src="images/grant-1.svg" alt="Environmental Science">
+                                <div class="image-label">Environmental Science</div>
+                                <div class="selected-badge">✓ Selected</div>
+                            </div>
+                            <div class="themed-image-option" data-image="grant-2.svg">
+                                <img src="images/grant-2.svg" alt="Robotics & Technology">
+                                <div class="image-label">Robotics & Technology</div>
+                                <div class="selected-badge">✓ Selected</div>
+                            </div>
+                            <div class="themed-image-option" data-image="grant-3.svg">
+                                <img src="images/grant-3.svg" alt="Arts & Culture">
+                                <div class="image-label">Arts & Culture</div>
+                                <div class="selected-badge">✓ Selected</div>
+                            </div>
+                            <div class="themed-image-option" data-image="grant-4.svg">
+                                <img src="images/grant-4.svg" alt="Farm to Table">
+                                <div class="image-label">Farm to Table</div>
+                                <div class="selected-badge">✓ Selected</div>
+                            </div>
+                            <div class="themed-image-option" data-image="grant-5.svg">
+                                <img src="images/grant-5.svg" alt="Outdoor Education">
+                                <div class="image-label">Outdoor Education</div>
+                                <div class="selected-badge">✓ Selected</div>
+                            </div>
+                            <div class="themed-image-option" data-image="grant-6.svg">
+                                <img src="images/grant-6.svg" alt="Music Technology">
+                                <div class="image-label">Music Technology</div>
+                                <div class="selected-badge">✓ Selected</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="form-section">
+                    <h2>Card Preview</h2>
+                    <div class="card-preview-wrapper">
+                        <div class="grant-card-preview">
+                            <div class="preview-image">
+                                <img src="images/grant-1.svg" alt="Preview" id="preview-image">
+                            </div>
+                            <div class="preview-content">
+                                <p class="preview-description" id="preview-description">
+                                    Students explored local ecosystems through hands-on field research, collecting water samples and studying native plant species along the Columbia River.
+                                </p>
+                            </div>
+                            <div class="preview-attribution">
+                                <div class="preview-school" id="preview-school">Hood River Middle School</div>
+                                <div class="preview-meta">
+                                    <span class="preview-teacher" id="preview-teacher">Sarah Martinez</span>
+                                    <span class="preview-year" id="preview-year">2024</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Buttons -->
+                <div class="form-actions">
+                    <button type="submit" class="button-primary button-large">Publish Grant Highlight</button>
+                    <button type="button" class="button-secondary button-large">Save as Draft</button>
+                    <a href="#" class="button-link">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin-mockup.js"></script>
+</body>
+</html>

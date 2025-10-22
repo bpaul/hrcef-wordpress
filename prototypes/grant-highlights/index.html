@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRCEF Grant Highlights Prototype</title>
+    <link rel="stylesheet" href="css/grants.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Impact Teaching Grants</h1>
+            <p>Supporting innovative classroom projects that enhance student learning</p>
+        </header>
+
+        <section class="grants-section">
+            <div class="section-header">
+                <h2>Grant Highlights</h2>
+                <button class="refresh-button" id="refresh-grants" aria-label="Load new grant highlights">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                    Load More
+                </button>
+            </div>
+
+            <div class="grants-grid" id="grants-grid">
+                <!-- Grant cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Apply for a Grant</h2>
+            <p>HRCEF provides funding for innovative teaching projects that make a difference in Hood River County classrooms.</p>
+            <a href="#" class="cta-button">Learn More About Grants</a>
+        </section>
+    </div>
+
+    <script src="js/grants.js"></script>
+</body>
+</html>
