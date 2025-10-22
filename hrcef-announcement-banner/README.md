@@ -231,6 +231,17 @@ For issues or questions, contact the HRCEF web team.
 
 ## Changelog
 
+### Version 1.0.3
+- Fixed gap between banner and page content
+- Removed theme margins that caused spacing issues
+- Ensured seamless connection to page header
+
+### Version 1.0.2
+- Fixed positioning to display below WordPress admin bar
+- Added responsive handling for mobile admin bar (46px height)
+- Adjusted z-index to work properly with WordPress.com toolbar
+- Improved body padding calculations for admin bar presence
+
 ### Version 1.0.1
 - Added content versioning system
 - Banner reappears when content is updated (title, description, or link)

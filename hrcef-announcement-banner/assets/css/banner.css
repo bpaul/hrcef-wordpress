@@ -2,7 +2,12 @@
 
 /* Add padding to body to prevent content from hiding behind fixed banner */
 body.hrcef-banner-visible {
-    padding-top: 72px;
+    padding-top: 53px;
+}
+
+/* Add extra padding when WordPress admin bar is present */
+body.admin-bar.hrcef-banner-visible {
+    padding-top: 85px; /* 32px admin bar + 53px banner */
 }
 
 /* Announcement Banner */
@@ -15,12 +20,31 @@ body.hrcef-banner-visible {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 9999;
+    z-index: 99999;
     animation: hrcefSlideDown 0.4s ease-out;
+}
+
+/* Position below WordPress admin bar when present */
+body.admin-bar .hrcef-announcement-banner {
+    top: 32px;
+    z-index: 99999;
 }
 
 .hrcef-announcement-banner.hrcef-banner-hidden {
     display: none;
+}
+
+/* Remove any margin from body when banner is visible to prevent gaps */
+body.hrcef-banner-visible {
+    margin-top: 0 !important;
+}
+
+/* Ensure first element after banner has no top margin */
+body.hrcef-banner-visible > *:not(.hrcef-announcement-banner):first-of-type,
+body.hrcef-banner-visible > div:first-of-type,
+body.hrcef-banner-visible .site-header,
+body.hrcef-banner-visible header {
+    margin-top: 0 !important;
 }
 
 .hrcef-banner-content {
@@ -188,6 +212,22 @@ body.hrcef-banner-visible {
     }
 
     body.hrcef-banner-visible {
-        padding-top: 90px;
+        padding-top: 70px;
+    }
+    
+    /* WordPress admin bar is 46px on mobile */
+    body.admin-bar.hrcef-banner-visible {
+        padding-top: 116px; /* 46px admin bar + 70px banner */
+    }
+    
+    body.admin-bar .hrcef-announcement-banner {
+        top: 46px;
+    }
+}
+
+/* Larger screens - admin bar height */
+@media (min-width: 783px) {
+    body.admin-bar .hrcef-announcement-banner {
+        top: 32px;
     }
 }
