@@ -199,7 +199,8 @@ When creating a new version:
 
 **Latest Versions:**
 - Testimonials: v1.0.4 (`hrcef-testimonials-plugin-v1.0.4.zip`)
-- Announcement Banner: v1.0.1 (`hrcef-announcement-banner-v1.0.1.zip`)
+- Announcement Banner: v1.0.3 (`hrcef-announcement-banner-v1.0.3.zip`)
+- Grant Highlights: v1.1.4 (`hrcef-grant-highlights-v1.1.4.zip`)
 
 ## Site Migration Notes (Future Reference)
 
@@ -221,8 +222,8 @@ If you ever need to migrate from WordPress.com:
 
 ### 2. HRCEF Announcement Banner Plugin
 **Location:** `/hrcef-announcement-banner/`
-**Current Version:** v1.0.1
-**Zip File:** `hrcef-announcement-banner-v1.0.1.zip`
+**Current Version:** v1.0.3
+**Zip File:** `hrcef-announcement-banner-v1.0.3.zip`
 **Status:** Ready for installation
 
 **Features:**
@@ -236,6 +237,61 @@ If you ever need to migrate from WordPress.com:
 - Page targeting (all pages or homepage)
 - Live preview in admin
 - Responsive design
+
+### 3. HRCEF Grant Highlights Plugin
+**Location:** `/hrcef-grant-highlights/`
+**Current Version:** v1.1.4
+**Zip File:** `hrcef-grant-highlights-v1.1.4.zip`
+**Status:** Ready for installation
+
+**Features:**
+- Custom post type (hrcef_grant) with school, teacher, year fields
+- Gutenberg block with configurable card count (1-6)
+- REST API endpoint: /wp-json/hrcef/v1/grants
+- 6 themed placeholder images (Environmental Science, Robotics, Arts, Farm to Table, Outdoor Ed, Music)
+- Random selection with click-to-refresh
+- Image-focused card layout (250px image + description + gradient footer)
+- HRCEF brand gradient styling
+- Responsive: 3 → 2 → 1 cards
+- Admin settings page with usage instructions
+
+---
+
+## Prototypes & Development Servers
+
+### Running Prototype Servers
+
+Prototypes use Python's built-in HTTP server for local testing:
+
+**Testimonials Plugin:**
+```bash
+cd /Users/barry/Projects/hrcef-wordpress/prototypes/testimonials-plugin
+python3 -m http.server 8000
+```
+Open: http://localhost:8000
+
+**Announcement Banner:**
+```bash
+cd /Users/barry/Projects/hrcef-wordpress/prototypes/announcement-banner
+python3 -m http.server 8001
+```
+Open: http://localhost:8001
+
+**Grant Highlights:**
+```bash
+cd /Users/barry/Projects/hrcef-wordpress/prototypes/grant-highlights
+python3 -m http.server 8002
+```
+Open: http://localhost:8002
+
+### Port Assignments
+- **8000** - Testimonials Plugin
+- **8001** - Announcement Banner
+- **8002** - Grant Highlights
+- **8003+** - Future prototypes
+
+### Stopping Servers
+Press `Ctrl+C` in the terminal running the server.
 
 ---
 
