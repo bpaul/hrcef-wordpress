@@ -7,11 +7,16 @@
     containers.forEach(container => {
         const grantsGrid = container.querySelector('.hrcef-grants-grid');
         const cardCount = parseInt(container.getAttribute('data-card-count')) || 3;
+        const tags = container.getAttribute('data-tags') || '';
         
         // Fetch grants data
         async function fetchGrants() {
             try {
-                const response = await fetch(hrcefGrants.restUrl);
+                let url = hrcefGrants.restUrl;
+                if (tags) {
+                    url += '?tags=' + tags;
+                }
+                const response = await fetch(url);
                 allGrants = await response.json();
                 displayRandomGrants();
             } catch (error) {

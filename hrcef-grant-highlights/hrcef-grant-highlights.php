@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Grant Highlights
  * Plugin URI: https://hrcef.org
  * Description: Display Impact Teaching Grant highlights with custom post type and Gutenberg block
- * Version: 1.1.4
+ * Version: 1.2.5
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_GRANTS_VERSION', '1.1.4');
+define('HRCEF_GRANTS_VERSION', '1.2.5');
 define('HRCEF_GRANTS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_GRANTS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -35,7 +35,11 @@ class HRCEF_Grant_Highlights {
         
         // Initialize plugin
         add_action('init', array($this, 'register_post_type'));
+        add_action('init', array($this, 'register_taxonomy'));
         add_action('init', array($this, 'register_block'));
+        
+        // Filter post type args to prevent default "Add New" menu
+        add_filter('register_post_type_args', array($this, 'modify_post_type_args'), 10, 2);
         
         // Admin menu
         add_action('admin_menu', array($this, 'add_admin_menu'));
@@ -125,6 +129,48 @@ class HRCEF_Grant_Highlights {
     }
     
     /**
+     * Register Taxonomy for Grant Tags
+     */
+    public function register_taxonomy() {
+        $labels = array(
+            'name'              => _x('Grant Tags', 'taxonomy general name', 'hrcef-grant-highlights'),
+            'singular_name'     => _x('Grant Tag', 'taxonomy singular name', 'hrcef-grant-highlights'),
+            'search_items'      => __('Search Tags', 'hrcef-grant-highlights'),
+            'all_items'         => __('All Tags', 'hrcef-grant-highlights'),
+            'edit_item'         => __('Edit Tag', 'hrcef-grant-highlights'),
+            'update_item'       => __('Update Tag', 'hrcef-grant-highlights'),
+            'add_new_item'      => __('Add New Tag', 'hrcef-grant-highlights'),
+            'new_item_name'     => __('New Tag Name', 'hrcef-grant-highlights'),
+            'menu_name'         => __('Tags', 'hrcef-grant-highlights'),
+        );
+        
+        $args = array(
+            'labels'            => $labels,
+            'hierarchical'      => false,
+            'public'            => false,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'show_in_rest'      => true,
+            'query_var'         => true,
+            'rewrite'           => array('slug' => 'grant-tag'),
+        );
+        
+        register_taxonomy('hrcef_grant_tag', array('hrcef_grant'), $args);
+    }
+    
+    /**
+     * Modify post type args to prevent default "Add New" menu
+     */
+    public function modify_post_type_args($args, $post_type) {
+        // Only modify our custom post type
+        if ($post_type === 'hrcef_grant') {
+            // Disable the default "Add New" button in admin bar and menu
+            $args['show_in_admin_bar'] = false;
+        }
+        return $args;
+    }
+    
+    /**
      * Register Gutenberg block
      */
     public function register_block() {
@@ -161,6 +207,13 @@ class HRCEF_Grant_Highlights {
                     'type' => 'string',
                     'default' => 'full',
                 ),
+                'selectedTags' => array(
+                    'type'    => 'array',
+                    'default' => array(),
+                    'items'   => array(
+                        'type' => 'number'
+                    )
+                ),
             ),
         ));
     }
@@ -170,13 +223,14 @@ class HRCEF_Grant_Highlights {
      */
     public function render_block($attributes) {
         $card_count = isset($attributes['cardCount']) ? intval($attributes['cardCount']) : 3;
+        $selected_tags = isset($attributes['selectedTags']) ? $attributes['selectedTags'] : array();
         
         // Check if we're in the editor (ServerSideRender context)
         $is_editor = defined('REST_REQUEST') && REST_REQUEST;
         
         if ($is_editor) {
             // In editor: render static preview with sample grants
-            return $this->render_editor_preview($card_count);
+            return $this->render_editor_preview($card_count, $selected_tags);
         }
         
         // On frontend: render dynamic template
@@ -188,7 +242,7 @@ class HRCEF_Grant_Highlights {
     /**
      * Render editor preview
      */
-    private function render_editor_preview($card_count) {
+    private function render_editor_preview($card_count, $selected_tags = array()) {
         // Get actual grants from database
         $args = array(
             'post_type' => 'hrcef_grant',
@@ -196,6 +250,18 @@ class HRCEF_Grant_Highlights {
             'orderby' => 'rand',
             'post_status' => 'publish',
         );
+        
+        // Add tag filtering if tags are selected
+        if (!empty($selected_tags)) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'hrcef_grant_tag',
+                    'field'    => 'term_id',
+                    'terms'    => $selected_tags,
+                    'operator' => 'IN'
+                )
+            );
+        }
         
         $query = new WP_Query($args);
         
@@ -263,18 +329,19 @@ class HRCEF_Grant_Highlights {
      * Add admin menu
      */
     public function add_admin_menu() {
-        // Replace "Add New" with custom page
-        remove_submenu_page('edit.php?post_type=hrcef_grant', 'post-new.php?post_type=hrcef_grant');
+        global $submenu;
         
+        // Add custom "Add New" page
         add_submenu_page(
             'edit.php?post_type=hrcef_grant',
-            __('Add New', 'hrcef-grant-highlights'),
-            __('Add New', 'hrcef-grant-highlights'),
+            __('Add New Grant', 'hrcef-grant-highlights'),
+            __('Add New Grant', 'hrcef-grant-highlights'),
             'edit_posts',
             'hrcef-grants-add-new',
             array($this, 'render_add_new_page')
         );
         
+        // Add Settings page
         add_submenu_page(
             'edit.php?post_type=hrcef_grant',
             __('Settings', 'hrcef-grant-highlights'),
@@ -283,6 +350,36 @@ class HRCEF_Grant_Highlights {
             'hrcef-grants-settings',
             array($this, 'render_settings_page')
         );
+        
+        // Hide the default "Add New" menu item with CSS
+        add_action('admin_head', function() {
+            echo '<style>
+                #menu-posts-hrcef_grant .wp-submenu li:has(a[href="post-new.php?post_type=hrcef_grant"]) {
+                    display: none !important;
+                }
+            </style>';
+        });
+        
+        // Redirect default "Add New" and "Edit" to our custom page
+        add_action('admin_init', function() {
+            global $pagenow;
+            
+            // Redirect "Add New"
+            if ($pagenow === 'post-new.php' && isset($_GET['post_type']) && $_GET['post_type'] === 'hrcef_grant') {
+                wp_redirect(admin_url('edit.php?post_type=hrcef_grant&page=hrcef-grants-add-new'));
+                exit;
+            }
+            
+            // Redirect "Edit"
+            if ($pagenow === 'post.php' && isset($_GET['post'])) {
+                $post_id = intval($_GET['post']);
+                $post = get_post($post_id);
+                if ($post && $post->post_type === 'hrcef_grant') {
+                    wp_redirect(admin_url('edit.php?post_type=hrcef_grant&page=hrcef-grants-add-new&grant_id=' . $post_id));
+                    exit;
+                }
+            }
+        });
     }
     
     /**
@@ -381,11 +478,26 @@ class HRCEF_Grant_Highlights {
      * Get grants for REST API
      */
     public function get_grants($request) {
+        $tags = $request->get_param('tags') ? $request->get_param('tags') : '';
+        
         $args = array(
             'post_type' => 'hrcef_grant',
             'posts_per_page' => -1,
             'post_status' => 'publish',
         );
+        
+        // Add tag filtering if tags are specified
+        if (!empty($tags)) {
+            $tag_ids = array_map('intval', explode(',', $tags));
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'hrcef_grant_tag',
+                    'field'    => 'term_id',
+                    'terms'    => $tag_ids,
+                    'operator' => 'IN'
+                )
+            );
+        }
         
         $query = new WP_Query($args);
         $grants = array();
