@@ -198,7 +198,7 @@ When creating a new version:
 5. Test thoroughly before deployment
 
 **Latest Versions:**
-- Testimonials: v1.0.4 (`hrcef-testimonials-plugin-v1.0.4.zip`)
+- Testimonials: v1.1.0 (`hrcef-testimonials-plugin-v1.1.0.zip`)
 - Announcement Banner: v1.0.3 (`hrcef-announcement-banner-v1.0.3.zip`)
 - Grant Highlights: v1.1.4 (`hrcef-grant-highlights-v1.1.4.zip`)
 

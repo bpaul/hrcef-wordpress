@@ -27,7 +27,7 @@ Gutenberg block for displaying testimonial cards with beautiful responsive layou
 - REST API endpoint for dynamic loading
 
 ### 2. HRCEF Announcement Banner Plugin
-**Status:** Ready for installation (v1.0.3)
+**Status:** Deployed (v1.0.3)
 **Location:** `/hrcef-announcement-banner/`
 
 Fixed banner at top of browser for important announcements and events.

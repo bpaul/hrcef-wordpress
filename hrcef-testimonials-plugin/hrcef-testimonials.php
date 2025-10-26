@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Testimonials
  * Plugin URI: https://hrcef.org
  * Description: A beautiful testimonials plugin for Hood River County Education Foundation with Gutenberg block support
- * Version: 1.0.4
+ * Version: 1.1.0
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_TESTIMONIALS_VERSION', '1.0.4');
+define('HRCEF_TESTIMONIALS_VERSION', '1.1.0');
 define('HRCEF_TESTIMONIALS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_TESTIMONIALS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -30,8 +30,9 @@ class HRCEF_Testimonials {
      * Constructor
      */
     public function __construct() {
-        // Register custom post type
+        // Register custom post type and taxonomy
         add_action('init', array($this, 'register_testimonial_post_type'));
+        add_action('init', array($this, 'register_testimonial_taxonomy'));
         
         // Register Gutenberg block
         add_action('init', array($this, 'register_gutenberg_block'));
@@ -91,6 +92,36 @@ class HRCEF_Testimonials {
     }
     
     /**
+     * Register Taxonomy for Testimonial Tags
+     */
+    public function register_testimonial_taxonomy() {
+        $labels = array(
+            'name'              => _x('Testimonial Tags', 'taxonomy general name', 'hrcef-testimonials'),
+            'singular_name'     => _x('Testimonial Tag', 'taxonomy singular name', 'hrcef-testimonials'),
+            'search_items'      => __('Search Tags', 'hrcef-testimonials'),
+            'all_items'         => __('All Tags', 'hrcef-testimonials'),
+            'edit_item'         => __('Edit Tag', 'hrcef-testimonials'),
+            'update_item'       => __('Update Tag', 'hrcef-testimonials'),
+            'add_new_item'      => __('Add New Tag', 'hrcef-testimonials'),
+            'new_item_name'     => __('New Tag Name', 'hrcef-testimonials'),
+            'menu_name'         => __('Tags', 'hrcef-testimonials'),
+        );
+        
+        $args = array(
+            'labels'            => $labels,
+            'hierarchical'      => false,
+            'public'            => false,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'show_in_rest'      => true,
+            'query_var'         => true,
+            'rewrite'           => array('slug' => 'testimonial-tag'),
+        );
+        
+        register_taxonomy('hrcef_testimonial_tag', array('hrcef_testimonial'), $args);
+    }
+    
+    /**
      * Register Gutenberg Block
      */
     public function register_gutenberg_block() {
@@ -123,6 +154,13 @@ class HRCEF_Testimonials {
                 'align' => array(
                     'type'    => 'string',
                     'default' => 'full'
+                ),
+                'selectedTags' => array(
+                    'type'    => 'array',
+                    'default' => array(),
+                    'items'   => array(
+                        'type' => 'number'
+                    )
                 )
             ),
             'supports'        => array(
@@ -138,6 +176,7 @@ class HRCEF_Testimonials {
     public function render_testimonials_block($attributes) {
         $count = isset($attributes['count']) ? intval($attributes['count']) : 3;
         $align = isset($attributes['align']) ? $attributes['align'] : 'full';
+        $selected_tags = isset($attributes['selectedTags']) ? $attributes['selectedTags'] : array();
         
         // Get random testimonials
         $args = array(
@@ -146,6 +185,18 @@ class HRCEF_Testimonials {
             'orderby'        => 'rand',
             'post_status'    => 'publish'
         );
+        
+        // Add tag filtering if tags are selected
+        if (!empty($selected_tags)) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'hrcef_testimonial_tag',
+                    'field'    => 'term_id',
+                    'terms'    => $selected_tags,
+                    'operator' => 'IN'
+                )
+            );
+        }
         
         $testimonials = get_posts($args);
         
@@ -248,6 +299,7 @@ class HRCEF_Testimonials {
      */
     public function get_testimonials_api($request) {
         $count = $request->get_param('count') ? intval($request->get_param('count')) : 3;
+        $tags = $request->get_param('tags') ? $request->get_param('tags') : '';
         
         $args = array(
             'post_type'      => 'hrcef_testimonial',
@@ -255,6 +307,19 @@ class HRCEF_Testimonials {
             'orderby'        => 'rand',
             'post_status'    => 'publish'
         );
+        
+        // Add tag filtering if tags are specified
+        if (!empty($tags)) {
+            $tag_ids = array_map('intval', explode(',', $tags));
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'hrcef_testimonial_tag',
+                    'field'    => 'term_id',
+                    'terms'    => $tag_ids,
+                    'operator' => 'IN'
+                )
+            );
+        }
         
         $testimonials = get_posts($args);
         $data = array();

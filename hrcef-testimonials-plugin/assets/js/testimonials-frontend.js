@@ -13,8 +13,14 @@
     function loadRandomTestimonials(gridElement) {
         const count = getCardCount();
         const defaultImage = gridElement.dataset.defaultImage || '';
+        const tags = gridElement.dataset.tags || '';
         
-        fetch('/wp-json/hrcef/v1/testimonials?count=' + count)
+        let url = '/wp-json/hrcef/v1/testimonials?count=' + count;
+        if (tags) {
+            url += '&tags=' + tags;
+        }
+        
+        fetch(url)
             .then(response => response.json())
             .then(testimonials => {
                 displayTestimonials(gridElement, testimonials, defaultImage);
