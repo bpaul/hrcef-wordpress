@@ -1,5 +1,28 @@
 # Changelog - HRCEF Testimonials Plugin
 
+## Version 1.1.1 - October 30, 2025
+
+### Bug Fixes
+- **Image Caching Issue Fixed**: Resolved bug where cards with no image would display previously used images
+  - **Root Cause**: Empty image URLs (`''`) were being set as `background-image: url('')`, causing browser caching issues
+  - **Solution 1**: Added proper empty string check before setting background-image
+  - **Solution 2**: Improved image URL validation to use default image for empty/whitespace strings
+  - **Solution 3**: Removed unnecessary default image extraction code (already in data attribute)
+
+### Technical Details
+- Changed image URL logic from `testimonial.image || defaultImage` to explicit empty string check
+- Added conditional background-image setting: only sets if URL is valid and non-empty
+- Simplified initialization code by relying on `data-default-image` attribute from PHP template
+- Now properly falls back to placeholder image for testimonials without photos
+
+### Benefits
+- ✅ Consistent image display on card reload
+- ✅ No more "ghost" images from previous cards
+- ✅ Cleaner JavaScript code
+- ✅ More reliable default image handling
+
+---
+
 ## Version 1.1.0 - October 26, 2025
 
 ### New Features

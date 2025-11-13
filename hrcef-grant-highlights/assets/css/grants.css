@@ -2,14 +2,20 @@
 
 /* Container */
 .hrcef-grants-container {
-    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 60px 20px;
 }
 
+/* Full width alignment */
 .hrcef-grants-container.alignfull {
     max-width: 100%;
     padding: 60px 40px;
+}
+
+/* Wide alignment */
+.hrcef-grants-container.alignwide {
+    max-width: 1600px;
 }
 
 /* Header */
@@ -101,7 +107,7 @@
 /* Grant Image */
 .grant-image {
     width: 100%;
-    height: 250px;
+    aspect-ratio: 3 / 2;
     overflow: hidden;
     background: #e0e0e0;
 }
@@ -115,6 +121,21 @@
 
 .grant-card:hover .grant-image img {
     transform: scale(1.05);
+}
+
+/* Grant Title */
+.grant-title {
+    padding: 20px 24px 16px;
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.grant-title h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0066B3;
+    line-height: 1.4;
 }
 
 /* Grant Content */
@@ -167,9 +188,18 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
     }
+    
+    /* Hide 3rd card and beyond on tablet */
+    .grant-card:nth-child(n+3) {
+        display: none;
+    }
 }
 
 @media (max-width: 768px) {
+    .hrcef-grants-container {
+        padding: 40px 16px;
+    }
+
     .hrcef-grants-header {
         justify-content: center;
     }
@@ -181,6 +211,11 @@
 
     .grant-description {
         min-height: auto;
+    }
+    
+    /* Hide 2nd card and beyond on mobile */
+    .grant-card:nth-child(n+2) {
+        display: none;
     }
 }
 

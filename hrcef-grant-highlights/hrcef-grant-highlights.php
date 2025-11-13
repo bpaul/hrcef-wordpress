@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Grant Highlights
  * Plugin URI: https://hrcef.org
  * Description: Display Impact Teaching Grant highlights with custom post type and Gutenberg block
- * Version: 1.2.5
+ * Version: 1.9.0
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_GRANTS_VERSION', '1.2.5');
+define('HRCEF_GRANTS_VERSION', '1.9.0');
 define('HRCEF_GRANTS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_GRANTS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
@@ -223,27 +223,10 @@ class HRCEF_Grant_Highlights {
      */
     public function render_block($attributes) {
         $card_count = isset($attributes['cardCount']) ? intval($attributes['cardCount']) : 3;
+        $align = isset($attributes['align']) ? $attributes['align'] : 'full';
         $selected_tags = isset($attributes['selectedTags']) ? $attributes['selectedTags'] : array();
         
-        // Check if we're in the editor (ServerSideRender context)
-        $is_editor = defined('REST_REQUEST') && REST_REQUEST;
-        
-        if ($is_editor) {
-            // In editor: render static preview with sample grants
-            return $this->render_editor_preview($card_count, $selected_tags);
-        }
-        
-        // On frontend: render dynamic template
-        ob_start();
-        include HRCEF_GRANTS_PLUGIN_DIR . 'templates/grants-display.php';
-        return ob_get_clean();
-    }
-    
-    /**
-     * Render editor preview
-     */
-    private function render_editor_preview($card_count, $selected_tags = array()) {
-        // Get actual grants from database
+        // Get grants from database
         $args = array(
             'post_type' => 'hrcef_grant',
             'posts_per_page' => $card_count,
@@ -263,65 +246,20 @@ class HRCEF_Grant_Highlights {
             );
         }
         
-        $query = new WP_Query($args);
+        $grants = get_posts($args);
+        
+        if (empty($grants)) {
+            $message = '<div style="padding: 40px; text-align: center; background: #f5f5f5; border-radius: 8px; border: 2px dashed #ccc;">';
+            $message .= '<p style="margin: 0 0 10px; font-size: 16px; color: #666;">' . __('No grant highlights found.', 'hrcef-grant-highlights') . '</p>';
+            if (current_user_can('edit_posts')) {
+                $message .= '<p style="margin: 0;"><a href="' . admin_url('edit.php?post_type=hrcef_grant&page=hrcef-grants-add-new') . '" class="button button-primary">' . __('Add Your First Grant', 'hrcef-grant-highlights') . '</a></p>';
+            }
+            $message .= '</div>';
+            return $message;
+        }
         
         ob_start();
-        ?>
-        <div class="hrcef-grants-container alignfull">
-            <div class="hrcef-grants-grid">
-                <?php
-                if ($query->have_posts()) {
-                    while ($query->have_posts()) {
-                        $query->the_post();
-                        $post_id = get_the_ID();
-                        
-                        // Get grant data
-                        $school = get_post_meta($post_id, 'school_name', true);
-                        $teacher = get_post_meta($post_id, 'teacher_name', true);
-                        $year = get_post_meta($post_id, 'grant_year', true);
-                        $description = get_the_content();
-                        
-                        // Get image
-                        $themed_image = get_post_meta($post_id, '_themed_image', true);
-                        if ($themed_image) {
-                            $image_url = HRCEF_GRANTS_PLUGIN_URL . 'assets/images/' . $themed_image;
-                        } else {
-                            $image_url = get_the_post_thumbnail_url($post_id, 'large');
-                            if (!$image_url) {
-                                $image_url = HRCEF_GRANTS_PLUGIN_URL . 'assets/images/grant-1.svg';
-                            }
-                        }
-                        ?>
-                        <div class="grant-card">
-                            <div class="grant-image">
-                                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($school); ?> grant project">
-                            </div>
-                            <div class="grant-content">
-                                <p class="grant-description"><?php echo esc_html($description); ?></p>
-                            </div>
-                            <div class="grant-attribution">
-                                <div class="grant-school"><?php echo esc_html($school); ?></div>
-                                <div class="grant-meta">
-                                    <span class="grant-teacher"><?php echo esc_html($teacher); ?></span>
-                                    <span class="grant-year"><?php echo esc_html($year); ?></span>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                    wp_reset_postdata();
-                } else {
-                    ?>
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        <p><strong>No grant highlights yet.</strong></p>
-                        <p>Add your first grant highlight to see it displayed here.</p>
-                    </div>
-                    <?php
-                }
-                ?>
-            </div>
-        </div>
-        <?php
+        include HRCEF_GRANTS_PLUGIN_DIR . 'templates/grants-display.php';
         return ob_get_clean();
     }
     
@@ -409,6 +347,7 @@ class HRCEF_Grant_Highlights {
             HRCEF_GRANTS_VERSION
         );
         
+        // Enqueue frontend JavaScript for click-to-reload functionality
         wp_enqueue_script(
             'hrcef-grants-script',
             HRCEF_GRANTS_PLUGIN_URL . 'assets/js/grants-frontend.js',
@@ -420,6 +359,7 @@ class HRCEF_Grant_Highlights {
         wp_localize_script('hrcef-grants-script', 'hrcefGrants', array(
             'restUrl' => rest_url('hrcef/v1/grants'),
             'nonce' => wp_create_nonce('wp_rest'),
+            'pluginUrl' => HRCEF_GRANTS_PLUGIN_URL,
         ));
     }
     
@@ -440,6 +380,9 @@ class HRCEF_Grant_Highlights {
             return;
         }
         
+        // Enqueue WordPress media uploader
+        wp_enqueue_media();
+        
         wp_enqueue_style(
             'hrcef-grants-admin-style',
             HRCEF_GRANTS_PLUGIN_URL . 'assets/css/admin.css',
@@ -450,7 +393,7 @@ class HRCEF_Grant_Highlights {
         wp_enqueue_script(
             'hrcef-grants-admin-script',
             HRCEF_GRANTS_PLUGIN_URL . 'assets/js/admin.js',
-            array('jquery'),
+            array('jquery', 'wp-util'),
             HRCEF_GRANTS_VERSION,
             true
         );
@@ -521,6 +464,7 @@ class HRCEF_Grant_Highlights {
                 
                 $grants[] = array(
                     'id' => $post_id,
+                    'title' => get_the_title(),
                     'description' => get_the_content(),
                     'school' => get_post_meta($post_id, 'school_name', true),
                     'teacher' => get_post_meta($post_id, 'teacher_name', true),
@@ -712,24 +656,26 @@ class HRCEF_Grant_Highlights {
         
         // Get data
         $grant_id = isset($_POST['grant_id']) ? intval($_POST['grant_id']) : 0;
+        $grant_title = isset($_POST['grant_title']) ? sanitize_text_field($_POST['grant_title']) : '';
         $description = isset($_POST['description']) ? wp_kses_post($_POST['description']) : '';
         $school_name = isset($_POST['school_name']) ? sanitize_text_field($_POST['school_name']) : '';
         $teacher_name = isset($_POST['teacher_name']) ? sanitize_text_field($_POST['teacher_name']) : '';
         $grant_year = isset($_POST['grant_year']) ? sanitize_text_field($_POST['grant_year']) : '';
         $image_url = isset($_POST['image_url']) ? esc_url_raw($_POST['image_url']) : '';
+        $featured_image_id = isset($_POST['featured_image_id']) ? intval($_POST['featured_image_id']) : 0;
         $status = isset($_POST['status']) ? sanitize_text_field($_POST['status']) : 'publish';
         
-        // Validate required fields
-        if (empty($description) || empty($school_name) || empty($teacher_name) || empty($grant_year)) {
+        // Validate required fields (teacher_name is now optional)
+        if (empty($grant_title) || empty($description) || empty($school_name) || empty($grant_year)) {
             wp_send_json_error(array('message' => 'Please fill in all required fields'));
         }
         
         // Create or update post
         $post_data = array(
             'post_type' => 'hrcef_grant',
+            'post_title' => $grant_title,
             'post_content' => $description,
             'post_status' => $status,
-            'post_title' => substr($description, 0, 50) . '...', // Auto-generate title from description
         );
         
         if ($grant_id > 0) {
@@ -749,16 +695,23 @@ class HRCEF_Grant_Highlights {
         update_post_meta($result, 'grant_year', $grant_year);
         
         // Handle image
-        if (!empty($image_url)) {
-            // If it's a themed image, we need to handle it differently
+        if ($featured_image_id > 0) {
+            // Custom uploaded image - set as featured image
+            set_post_thumbnail($result, $featured_image_id);
+            // Clear themed image meta if it exists
+            delete_post_meta($result, '_themed_image');
+        } elseif (!empty($image_url)) {
+            // Themed image selected
             if (strpos($image_url, 'grant-') !== false && strpos($image_url, '.svg') !== false) {
                 // Store the themed image reference
                 update_post_meta($result, '_themed_image', basename($image_url));
-            } else {
-                // Handle uploaded image (would need media upload handling)
-                // For now, just store the URL
-                update_post_meta($result, '_custom_image_url', $image_url);
+                // Clear featured image if it exists
+                delete_post_thumbnail($result);
             }
+        } else {
+            // No image selected - clear both
+            delete_post_thumbnail($result);
+            delete_post_meta($result, '_themed_image');
         }
         
         wp_send_json_success(array(

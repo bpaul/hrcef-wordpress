@@ -45,7 +45,8 @@
         const card = document.createElement('div');
         card.className = 'hrcef-testimonial-card';
         
-        const imageUrl = testimonial.image || defaultImage;
+        // Use default image if testimonial.image is empty or falsy
+        const imageUrl = (testimonial.image && testimonial.image.trim() !== '') ? testimonial.image : defaultImage;
         
         // Create elements and set text content directly to avoid HTML encoding issues
         const contentTop = document.createElement('div');
@@ -61,7 +62,10 @@
         
         const avatar = document.createElement('div');
         avatar.className = 'hrcef-testimonial-avatar';
-        avatar.style.backgroundImage = `url('${imageUrl}')`;
+        // Only set background-image if we have a valid URL
+        if (imageUrl && imageUrl.trim() !== '') {
+            avatar.style.backgroundImage = `url('${imageUrl}')`;
+        }
         
         contentTop.appendChild(quote);
         contentTop.appendChild(quoteIcon);
@@ -103,15 +107,8 @@
         const grids = document.querySelectorAll('[data-testimonials-grid]');
         
         grids.forEach(function(grid) {
-            // Store default image URL
-            const defaultImageElement = grid.querySelector('.hrcef-testimonial-avatar');
-            if (defaultImageElement) {
-                const style = defaultImageElement.style.backgroundImage;
-                const match = style.match(/url\(['"]?([^'"]+)['"]?\)/);
-                if (match) {
-                    grid.dataset.defaultImage = match[1];
-                }
-            }
+            // Default image URL is already set via data-default-image attribute in PHP template
+            // No need to extract it from the first card's style
             
             // Add click handlers to cards
             grid.addEventListener('click', function(e) {

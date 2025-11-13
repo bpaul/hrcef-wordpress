@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grant Highlights - Title Variation Prototype</title>
+    <link rel="stylesheet" href="css/grants.css">
+    <style>
+        /* Additional styles for title variation */
+        .grant-card.with-title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .grant-title {
+            padding: 20px 24px 16px;
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .grant-title h3 {
+            margin: 0;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #0066B3;
+            line-height: 1.4;
+        }
+
+        /* Adjust content padding when title is present */
+        .grant-card.with-title .grant-content {
+            padding: 20px 24px;
+        }
+
+        /* Variation 2: Title over image */
+        .grant-card.title-over-image .grant-image {
+            position: relative;
+        }
+
+        .grant-card.title-over-image .grant-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 40px 24px 20px;
+            border: none;
+        }
+
+        .grant-card.title-over-image .grant-title h3 {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Variation 3: Title in gradient footer */
+        .grant-card.title-in-footer .grant-attribution {
+            padding-top: 20px;
+        }
+
+        .grant-card.title-in-footer .grant-title {
+            padding: 16px 24px 8px;
+            background: linear-gradient(135deg, #0066B3, #008B8B);
+            border: none;
+        }
+
+        .grant-card.title-in-footer .grant-title h3 {
+            color: white;
+            font-size: 1rem;
+        }
+
+        .grant-card.title-in-footer .grant-school {
+            margin-top: 8px;
+        }
+
+        /* Section headers for comparison */
+        .comparison-section {
+            margin: 60px 0 40px;
+        }
+
+        .comparison-section h2 {
+            text-align: center;
+            color: #0066B3;
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .comparison-section p {
+            text-align: center;
+            color: #666;
+            margin-bottom: 32px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>Grant Highlights - Title Variations</h1>
+            <p>Exploring different ways to add titles to grant highlight cards</p>
+        </header>
+
+        <!-- Original Design (No Title) -->
+        <section class="comparison-section">
+            <h2>Original Design (No Title)</h2>
+            <p>Current card layout without title</p>
+            <div class="grants-grid">
+                <div class="grant-card">
+                    <div class="grant-image">
+                        <img src="images/grant-1.svg" alt="Environmental Science grant">
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students explored local ecosystems through hands-on field studies, collecting water samples and identifying native species along the Columbia River.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Hood River Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Sarah Martinez</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card">
+                    <div class="grant-image">
+                        <img src="images/grant-2.svg" alt="Robotics grant">
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students designed and programmed robots to solve real-world challenges, developing critical thinking and engineering skills.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Wy'east Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">James Chen</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card">
+                    <div class="grant-image">
+                        <img src="images/grant-3.svg" alt="Arts grant">
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students created a community mural celebrating local history and culture, learning traditional and modern art techniques.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Hood River Valley High School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Maria Rodriguez</span>
+                            <span class="grant-year">2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Variation 1: Title Above Content -->
+        <section class="comparison-section">
+            <h2>Variation 1: Title Above Content</h2>
+            <p>Title appears between image and description with subtle border</p>
+            <div class="grants-grid">
+                <div class="grant-card with-title">
+                    <div class="grant-image">
+                        <img src="images/grant-1.svg" alt="Environmental Science grant">
+                    </div>
+                    <div class="grant-title">
+                        <h3>Columbia River Ecosystem Study</h3>
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students explored local ecosystems through hands-on field studies, collecting water samples and identifying native species along the Columbia River.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Hood River Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Sarah Martinez</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card with-title">
+                    <div class="grant-image">
+                        <img src="images/grant-2.svg" alt="Robotics grant">
+                    </div>
+                    <div class="grant-title">
+                        <h3>Robotics Challenge Lab</h3>
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students designed and programmed robots to solve real-world challenges, developing critical thinking and engineering skills.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Wy'east Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">James Chen</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card with-title">
+                    <div class="grant-image">
+                        <img src="images/grant-3.svg" alt="Arts grant">
+                    </div>
+                    <div class="grant-title">
+                        <h3>Community Heritage Mural Project</h3>
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students created a community mural celebrating local history and culture, learning traditional and modern art techniques.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Hood River Valley High School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Maria Rodriguez</span>
+                            <span class="grant-year">2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Variation 2: Title Over Image -->
+        <section class="comparison-section">
+            <h2>Variation 2: Title Over Image</h2>
+            <p>Title overlays the bottom of the image with gradient background</p>
+            <div class="grants-grid">
+                <div class="grant-card title-over-image">
+                    <div class="grant-image">
+                        <img src="images/grant-1.svg" alt="Environmental Science grant">
+                        <div class="grant-title">
+                            <h3>Columbia River Ecosystem Study</h3>
+                        </div>
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students explored local ecosystems through hands-on field studies, collecting water samples and identifying native species along the Columbia River.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Hood River Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Sarah Martinez</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card title-over-image">
+                    <div class="grant-image">
+                        <img src="images/grant-2.svg" alt="Robotics grant">
+                        <div class="grant-title">
+                            <h3>Robotics Challenge Lab</h3>
+                        </div>
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students designed and programmed robots to solve real-world challenges, developing critical thinking and engineering skills.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Wy'east Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">James Chen</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card title-over-image">
+                    <div class="grant-image">
+                        <img src="images/grant-3.svg" alt="Arts grant">
+                        <div class="grant-title">
+                            <h3>Community Heritage Mural Project</h3>
+                        </div>
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students created a community mural celebrating local history and culture, learning traditional and modern art techniques.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-school">Hood River Valley High School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Maria Rodriguez</span>
+                            <span class="grant-year">2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Variation 3: Title in Footer -->
+        <section class="comparison-section">
+            <h2>Variation 3: Title in Gradient Footer</h2>
+            <p>Title appears at the top of the blue gradient footer section</p>
+            <div class="grants-grid">
+                <div class="grant-card title-in-footer">
+                    <div class="grant-image">
+                        <img src="images/grant-1.svg" alt="Environmental Science grant">
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students explored local ecosystems through hands-on field studies, collecting water samples and identifying native species along the Columbia River.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-title">
+                            <h3>Columbia River Ecosystem Study</h3>
+                        </div>
+                        <div class="grant-school">Hood River Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Sarah Martinez</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card title-in-footer">
+                    <div class="grant-image">
+                        <img src="images/grant-2.svg" alt="Robotics grant">
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students designed and programmed robots to solve real-world challenges, developing critical thinking and engineering skills.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-title">
+                            <h3>Robotics Challenge Lab</h3>
+                        </div>
+                        <div class="grant-school">Wy'east Middle School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">James Chen</span>
+                            <span class="grant-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grant-card title-in-footer">
+                    <div class="grant-image">
+                        <img src="images/grant-3.svg" alt="Arts grant">
+                    </div>
+                    <div class="grant-content">
+                        <p class="grant-description">Students created a community mural celebrating local history and culture, learning traditional and modern art techniques.</p>
+                    </div>
+                    <div class="grant-attribution">
+                        <div class="grant-title">
+                            <h3>Community Heritage Mural Project</h3>
+                        </div>
+                        <div class="grant-school">Hood River Valley High School</div>
+                        <div class="grant-meta">
+                            <span class="grant-teacher">Maria Rodriguez</span>
+                            <span class="grant-year">2023</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Which Design Do You Prefer?</h2>
+            <p>Each variation offers a different visual hierarchy and emphasis on the grant title.</p>
+        </section>
+    </div>
+</body>
+</html>

@@ -34,11 +34,15 @@
         // Create grant card HTML
         function createGrantCard(grant) {
             const imageUrl = grant.image || hrcefGrants.pluginUrl + 'assets/images/grant-placeholder.svg';
+            const title = grant.title || 'Grant Project';
             
             return `
                 <div class="grant-card">
                     <div class="grant-image">
                         <img src="${imageUrl}" alt="${grant.school} grant project">
+                    </div>
+                    <div class="grant-title">
+                        <h3>${title}</h3>
                     </div>
                     <div class="grant-content">
                         <p class="grant-description">${grant.description}</p>
@@ -46,7 +50,7 @@
                     <div class="grant-attribution">
                         <div class="grant-school">${grant.school}</div>
                         <div class="grant-meta">
-                            <span class="grant-teacher">${grant.teacher}</span>
+                            ${grant.teacher ? `<span class="grant-teacher">${grant.teacher}</span>` : ''}
                             <span class="grant-year">${grant.year}</span>
                         </div>
                     </div>

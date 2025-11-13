@@ -10,26 +10,32 @@ if (!defined('ABSPATH')) {
 
 // Get grant data if editing
 $grant = null;
+$grant_title = '';
 $school_name = '';
 $teacher_name = '';
 $grant_year = '';
 $description = '';
 $image_url = '';
+$featured_image_id = '';
 
 if ($grant_id > 0) {
     $grant = get_post($grant_id);
     if ($grant && $grant->post_type === 'hrcef_grant') {
+        $grant_title = $grant->post_title;
         $school_name = get_post_meta($grant_id, 'school_name', true);
         $teacher_name = get_post_meta($grant_id, 'teacher_name', true);
         $grant_year = get_post_meta($grant_id, 'grant_year', true);
         $description = $grant->post_content;
         
-        // Get image
-        $themed_image = get_post_meta($grant_id, '_themed_image', true);
-        if ($themed_image) {
-            $image_url = HRCEF_GRANTS_PLUGIN_URL . 'assets/images/' . $themed_image;
-        } else {
+        // Get image - check for featured image first, then themed image
+        $featured_image_id = get_post_thumbnail_id($grant_id);
+        if ($featured_image_id) {
             $image_url = get_the_post_thumbnail_url($grant_id, 'large');
+        } else {
+            $themed_image = get_post_meta($grant_id, '_themed_image', true);
+            if ($themed_image) {
+                $image_url = HRCEF_GRANTS_PLUGIN_URL . 'assets/images/' . $themed_image;
+            }
         }
     }
 }
@@ -47,6 +53,20 @@ $page_title = $grant_id > 0 ? __('Edit Grant Highlight', 'hrcef-grant-highlights
     <form id="hrcef-grant-form" class="hrcef-grant-form">
         <input type="hidden" name="grant_id" id="grant_id" value="<?php echo esc_attr($grant_id); ?>">
         
+        <!-- Grant Title -->
+        <div class="form-section">
+            <label for="grant-title"><?php _e('Grant Title', 'hrcef-grant-highlights'); ?> *</label>
+            <input 
+                type="text" 
+                id="grant-title" 
+                name="grant_title" 
+                value="<?php echo esc_attr($grant_title); ?>" 
+                placeholder="<?php esc_attr_e('e.g., Columbia River Ecosystem Study', 'hrcef-grant-highlights'); ?>"
+                required
+            >
+            <p class="description"><?php _e('A short, descriptive title for the grant project', 'hrcef-grant-highlights'); ?></p>
+        </div>
+
         <!-- Grant Description -->
         <div class="form-section">
             <label for="grant-description"><?php _e('Grant Description', 'hrcef-grant-highlights'); ?> *</label>
@@ -67,8 +87,8 @@ $page_title = $grant_id > 0 ? __('Edit Grant Highlight', 'hrcef-grant-highlights
                 <input type="text" id="school-name" name="school_name" value="<?php echo esc_attr($school_name); ?>" placeholder="<?php esc_attr_e('Enter school name', 'hrcef-grant-highlights'); ?>" required>
             </div>
             <div class="form-field">
-                <label for="teacher-name"><?php _e('Teacher Name', 'hrcef-grant-highlights'); ?> *</label>
-                <input type="text" id="teacher-name" name="teacher_name" value="<?php echo esc_attr($teacher_name); ?>" placeholder="<?php esc_attr_e('Enter teacher name', 'hrcef-grant-highlights'); ?>" required>
+                <label for="teacher-name"><?php _e('Teacher Name', 'hrcef-grant-highlights'); ?></label>
+                <input type="text" id="teacher-name" name="teacher_name" value="<?php echo esc_attr($teacher_name); ?>" placeholder="<?php esc_attr_e('Enter teacher name (optional)', 'hrcef-grant-highlights'); ?>">
             </div>
         </div>
 
@@ -79,6 +99,9 @@ $page_title = $grant_id > 0 ? __('Edit Grant Highlight', 'hrcef-grant-highlights
                 <select id="grant-year" name="grant_year" required>
                     <option value=""><?php _e('Select Year', 'hrcef-grant-highlights'); ?></option>
                     <?php
+                    $current_selected = ($grant_year == 'Current') ? 'selected' : '';
+                    echo '<option value="Current" ' . $current_selected . '>Current</option>';
+                    
                     $current_year = date('Y');
                     for ($year = $current_year; $year >= 2010; $year--) {
                         $selected = ($grant_year == $year) ? 'selected' : '';
@@ -138,11 +161,34 @@ $page_title = $grant_id > 0 ? __('Edit Grant Highlight', 'hrcef-grant-highlights
             <!-- Upload Tab -->
             <div class="tab-content" id="upload-tab">
                 <div class="image-upload-area">
-                    <p class="description"><?php _e('Custom photo upload coming soon. For now, please use the themed images.', 'hrcef-grant-highlights'); ?></p>
+                    <div id="upload-placeholder" <?php echo $featured_image_id ? 'style="display:none;"' : ''; ?>>
+                        <button type="button" id="upload-image-button" class="button button-primary button-large">
+                            <span class="dashicons dashicons-upload" style="margin-top: 3px;"></span>
+                            <?php _e('Upload Custom Image', 'hrcef-grant-highlights'); ?>
+                        </button>
+                        <p class="description" style="margin-top: 15px;">
+                            <?php _e('Upload a custom photo for this grant. Recommended size: 800x500px or larger.', 'hrcef-grant-highlights'); ?>
+                        </p>
+                    </div>
+                    <?php if ($featured_image_id): ?>
+                    <div id="uploaded-image-container">
+                        <img id="uploaded-image-preview" src="<?php echo esc_url($image_url); ?>" alt="Uploaded image" style="max-width: 100%; height: auto; border-radius: 8px; margin-bottom: 15px;">
+                        <div>
+                            <button type="button" id="upload-image-button" class="button button-secondary">
+                                <span class="dashicons dashicons-edit" style="margin-top: 3px;"></span>
+                                <?php _e('Change Image', 'hrcef-grant-highlights'); ?>
+                            </button>
+                            <button type="button" id="remove-image-button" class="button button-link-delete">
+                                <?php _e('Remove Image', 'hrcef-grant-highlights'); ?>
+                            </button>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
             
             <input type="hidden" name="image_url" id="image-url" value="<?php echo esc_url($image_url); ?>">
+            <input type="hidden" name="featured_image_id" id="featured-image-id" value="<?php echo esc_attr($featured_image_id); ?>">
         </div>
 
         <!-- Preview Section -->
@@ -152,6 +198,9 @@ $page_title = $grant_id > 0 ? __('Edit Grant Highlight', 'hrcef-grant-highlights
                 <div class="grant-card-preview">
                     <div class="preview-image">
                         <img src="<?php echo esc_url($image_url ? $image_url : HRCEF_GRANTS_PLUGIN_URL . 'assets/images/grant-1.svg'); ?>" alt="Preview" id="preview-image">
+                    </div>
+                    <div class="preview-title">
+                        <h3 id="preview-title"><?php echo $grant_title ? esc_html($grant_title) : __('Grant Title', 'hrcef-grant-highlights'); ?></h3>
                     </div>
                     <div class="preview-content">
                         <p class="preview-description" id="preview-description">

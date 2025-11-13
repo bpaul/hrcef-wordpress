@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Testimonials
  * Plugin URI: https://hrcef.org
  * Description: A beautiful testimonials plugin for Hood River County Education Foundation with Gutenberg block support
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_TESTIMONIALS_VERSION', '1.1.0');
+define('HRCEF_TESTIMONIALS_VERSION', '1.1.1');
 define('HRCEF_TESTIMONIALS_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_TESTIMONIALS_PLUGIN_URL', plugin_dir_url(__FILE__));
 

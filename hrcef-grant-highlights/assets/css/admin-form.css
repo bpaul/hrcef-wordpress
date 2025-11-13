@@ -294,6 +294,20 @@ textarea {
     object-fit: cover;
 }
 
+.preview-title {
+    padding: 20px 24px 16px;
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.preview-title h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #0066B3;
+    line-height: 1.4;
+}
+
 .preview-content {
     padding: 24px;
 }
