@@ -3,7 +3,7 @@
  * Plugin Name: HRCEF Announcement Banner
  * Plugin URI: https://hrcef.org
  * Description: A dismissible announcement banner for highlighting important posts, events, and announcements on the HRCEF website
- * Version: 1.0.3
+ * Version: 1.0.5
  * Author: HRCEF
  * Author URI: https://hrcef.org
  * License: GPL v2 or later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('HRCEF_BANNER_VERSION', '1.0.3');
+define('HRCEF_BANNER_VERSION', '1.0.5');
 define('HRCEF_BANNER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('HRCEF_BANNER_PLUGIN_URL', plugin_dir_url(__FILE__));
 

@@ -105,11 +105,11 @@
 }
 
 .hrcef-announcement-banner-preview.deadline {
-    background: linear-gradient(135deg, #D97706, #F59E0B);
+    background: linear-gradient(135deg, #9A3412, #C2410C);
 }
 
 .hrcef-announcement-banner-preview.deadline .hrcef-banner-link {
-    color: #D97706;
+    color: #9A3412;
 }
 
 .hrcef-announcement-banner-preview.success {

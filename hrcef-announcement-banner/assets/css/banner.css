@@ -144,12 +144,12 @@ body.hrcef-banner-visible header {
 }
 
 .hrcef-banner-deadline {
-    background: linear-gradient(135deg, #D97706, #F59E0B);
-    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+    background: linear-gradient(135deg, #9A3412, #C2410C);
+    box-shadow: 0 4px 12px rgba(154, 52, 18, 0.3);
 }
 
 .hrcef-banner-deadline .hrcef-banner-link {
-    color: #D97706;
+    color: #9A3412;
 }
 
 .hrcef-banner-success {

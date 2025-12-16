@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 }
 
 $settings = get_option('hrcef_banner_settings');
-$posts = get_posts(array('numberposts' => 20, 'post_status' => 'publish'));
+$posts = get_posts(array('numberposts' => 50, 'post_status' => 'publish', 'post_type' => array('post', 'page'), 'orderby' => 'date', 'order' => 'DESC'));
 ?>
 
 <div class="wrap hrcef-banner-admin">
@@ -119,7 +119,7 @@ $posts = get_posts(array('numberposts' => 20, 'post_status' => 'publish'));
                         <select id="banner_post" name="link_post" class="regular-text">
                             <option value=""><?php _e('-- Select --', 'hrcef-announcement-banner'); ?></option>
                             <?php foreach ($posts as $post): ?>
-                                <option value="<?php echo esc_attr($post->ID); ?>" <?php selected($settings['link_url'], get_permalink($post->ID)); ?>>
+                                <option value="<?php echo esc_attr($post->ID); ?>" data-url="<?php echo esc_url(get_permalink($post->ID)); ?>" <?php selected($settings['link_url'], get_permalink($post->ID)); ?>>
                                     <?php echo esc_html($post->post_title); ?>
                                 </option>
                             <?php endforeach; ?>
@@ -168,7 +168,7 @@ $posts = get_posts(array('numberposts' => 20, 'post_status' => 'publish'));
                             </label>
                             <label class="hrcef-color-scheme-option">
                                 <input type="radio" name="color_scheme" value="deadline" <?php checked($settings['color_scheme'], 'deadline'); ?>>
-                                <span class="hrcef-color-preview" style="background: linear-gradient(135deg, #D97706, #F59E0B);"></span>
+                                <span class="hrcef-color-preview" style="background: linear-gradient(135deg, #9A3412, #C2410C);"></span>
                                 <span class="hrcef-color-label"><?php _e('Urgent Orange', 'hrcef-announcement-banner'); ?></span>
                             </label>
                             <label class="hrcef-color-scheme-option">

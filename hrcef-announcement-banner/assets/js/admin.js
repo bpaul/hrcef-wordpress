@@ -85,7 +85,7 @@
             const formData = {
                 action: 'hrcef_save_banner_settings',
                 nonce: hrcefBanner.nonce,
-                enabled: $('#banner_enabled').is(':checked'),
+                enabled: $('#banner_enabled').is(':checked') ? '1' : '0',
                 title: $titleInput.val(),
                 description: $descriptionInput.val(),
                 link_type: $linkTypeSelect.val(),
@@ -93,7 +93,7 @@
                 link_text: $linkTextInput.val(),
                 color_scheme: $('input[name="color_scheme"]:checked').val(),
                 icon: $iconSelect.val(),
-                dismissible: $('#banner_dismissible').is(':checked'),
+                dismissible: $('#banner_dismissible').is(':checked') ? '1' : '0',
                 show_on: $('input[name="show_on"]:checked').val(),
                 start_date: $('#banner_start_date').val(),
                 end_date: $('#banner_end_date').val()
